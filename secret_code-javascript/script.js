@@ -52,3 +52,26 @@ function decryptText(text) {
     output = res.join("");
     return output;
 }
+// Get the input field
+var input = document.getElementById("encr");
+
+// Execute a function when the user presses a key on the keyboard
+input.addEventListener("keypress", function(event) {
+  // If the user presses the "Enter" key on the keyboard
+  if (event.key === "Enter") {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    document.getElementById('output').innerText = (encryptText(document.getElementById('encr').value))
+  }
+});
+var input2 = document.getElementById("decr");
+
+// Execute a function when the user presses a key on the keyboard
+input2.addEventListener("keypress", function(event) {
+  // If the user presses the "Enter" key on the keyboard
+  if (event.key === "Enter") {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    document.getElementById('output2').innerText = (encryptText(document.getElementById('decr').value))
+  }
+});
