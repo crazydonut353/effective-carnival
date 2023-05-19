@@ -12,7 +12,7 @@ function makeid(length) {
 }
 
 
-const BASE_TEXT = makeid(40);
+const BASE_TEXT = 'aBeCB6DZGCIs3f8WxkGXe6P2VZRkljMJoS9Ym4Po';
 
 
 /**
