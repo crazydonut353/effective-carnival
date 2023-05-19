@@ -70,7 +70,7 @@ var input2 = document.getElementById("decr");
 input2.addEventListener("keypress", function(event) {
   // If the user presses the "Enter" key on the keyboard
   if (event.key === "Enter") {
-    // Cancel the default action, if nee
+    // Cancel the default action, if neexzc
     event.preventDefault();
     document.getElementById('output2').innerText = (decryptText(document.getElementById('decr').value))
   }
