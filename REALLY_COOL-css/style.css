@@ -1,3 +1,10 @@
 body, html {
     background-color: black;
+    display:grid;
+}
+div {
+    width: 200px;
+    background: yellow;
+    height: 100px;
+    place-self: center; /* new */
 }
