@@ -72,6 +72,6 @@ input2.addEventListener("keypress", function(event) {
   if (event.key === "Enter") {
     // Cancel the default action, if needed
     event.preventDefault();
-    document.getElementById('output2').innerText = (encryptText(document.getElementById('decr').value))
+    document.getElementById('output2').innerText = (decryptText(document.getElementById('decr').value))
   }
 });
