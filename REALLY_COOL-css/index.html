@@ -25,5 +25,32 @@
         <a href="./RealPlaylist/RealPlaylist.html"> The REAL playlist </a>
             
     </div>
+    <h2>YOUR Fortune cookie:</h2>
+    <h1 id="fortune"></h1>
+    <script>
+        var fortunes = [['hmm... I sense BOSO in ur past.','mr.cat says play froge clicker', "mr.cat says mason is furry...", "cheese. delicious"],
+            ['u are a cool person', 
+            'i ate ur fortune cookie. yumyumyum',
+            'I sense a page about leo in da futer'], //medium
+            [
+            'go to https://cheesefollowsyou.bridgeburning.net/media/test.mp3', 
+            'leo = coooool', 
+            'you love someone 🥰🥶❄🌠'
+        ], //rare
+            [
+    "on Feburary 31 you will meet your dad",
+    "today you will say hi",
+    "you will have a good day",
+    "you will have a BAD day (tomarrow)",
+    "oh... oh wow... its better you dont know...",
+    "Its blurry but I see a heart. wonder what it means...",
+    "you will chase something today. metaphoicaly.",
+    "to answer your question no. thats not probable",
+    "ultimantw"], //ultimantw\3aa
+    ];
+    var rando = fortunes[Math.floor(Math.random() * fortunes.length)];
+    var rando2 = rando[Math.floor(Math.random() * rando.length)];
+    document.getElementById("fortune").innerText = `⭐ ${rando2} ⭐`;
+    </script>
 </body>
 </html>

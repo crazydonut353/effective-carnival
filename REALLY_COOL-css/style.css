@@ -10,7 +10,7 @@
 }
 body, html {
     background-color: black;
-    
+    text-align:center;color:rgb(135, 0, 189);
 }
 
 #grid {
