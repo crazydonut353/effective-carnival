@@ -1,5 +1,6 @@
 let audio1 = new Audio("videoplayback (1).weba")
 var video = document.createElement('video');
+audio1.crossOrigin = "anonymous";
 
 video.addEventListener("loadedmetadata", () => {
     // Get the canvas element
