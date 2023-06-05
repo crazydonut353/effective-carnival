@@ -1,7 +1,7 @@
 
 function makeid(length) {
     let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_';
     const charactersLength = characters.length;
     let counter = 0;
     while (counter < length) {
@@ -13,6 +13,8 @@ function makeid(length) {
 
 
 const BASE_TEXT = 'aBeCB6DZGCIs3f8WxkGXe6P2VZRkljMJoS9Ym4Po';
+const c_menu = document.getElementById("c_menu");
+const c_select_key = document.getElementById("c_select_key");
 
 
 /**
@@ -54,7 +56,8 @@ function decryptText(text) {
 }
 // Get the input field
 var input = document.getElementById("encr");
-
+console.log(makeid(10));
+//[0-9A-Za-z_-]{10}[048AEIMQUYcgkosw]
 // Execute a function when the user presses a key on the keyboard
 input.addEventListener("keypress", function(event) {
   // If the user presses the "Enter" key on the keyboard
@@ -75,3 +78,7 @@ input2.addEventListener("keypress", function(event) {
     document.getElementById('output2').innerText = (decryptText(document.getElementById('decr').value))
   }
 });
+
+c_select_key.addEventListener("onchange", () => {
+  
+})

@@ -1,6 +1,6 @@
-let audio1 = new Audio("videoplayback (1).weba")
+let audio1 = new Audio("The-Cannery.mp3");
+//"videoplayback (1).weba"
 var video = document.createElement('video');
-audio1.crossOrigin = "anonymous";
 
 video.addEventListener("loadedmetadata", () => {
     // Get the canvas element
@@ -34,6 +34,7 @@ let analyser;
 
 document.addEventListener("click", () => {
     video.loop = true;
+    video.volume = 0;
     video.play();
     audioCtx = new AudioContext();
     audio1.play();
@@ -54,9 +55,9 @@ document.addEventListener("click", () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
         analyser.getByteFrequencyData(dataArray);
-        ctx.drawImage(video,0-dataArray[5]*5/2,0-dataArray[5]*5/2,canvas.width+dataArray[5]*5,canvas.height+dataArray[5]*5) 
+        ctx.drawImage(bg,0-dataArray[5]/2,0-dataArray[5]/2,canvas.width+dataArray[5],canvas.height+dataArray[5]) 
         ctx.font = "48px serif";
-        ctx.fillText("HAPPY BIRTHDAY ROSS!!!", 10, 50);
+        ctx.fillText("", 10, 50);
         for(let i = 0; i < bufferLength; i++) {
             barHeight = dataArray[i];
             ctx.fillStyle = "blue";
@@ -70,4 +71,4 @@ document.addEventListener("click", () => {
     animate();
 })
 });
-video.src = "fire.mp4";
+video.src = "videoplayback (3).mp4";
