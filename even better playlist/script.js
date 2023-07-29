@@ -1,4 +1,4 @@
-let audio1 = new Audio("The-Cannery.mp3");
+let audio1 = new Audio("ds_3.weba");
 //"videoplayback (1).weba"
 var video = document.createElement('video');
 
@@ -55,7 +55,7 @@ document.addEventListener("click", () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
         analyser.getByteFrequencyData(dataArray);
-        ctx.drawImage(bg,0-dataArray[5]/2,0-dataArray[5]/2,canvas.width+dataArray[5],canvas.height+dataArray[5]) 
+        ctx.drawImage(video,0-dataArray[5]/2,0-dataArray[5]/2,canvas.width+dataArray[5],canvas.height+dataArray[5]) 
         ctx.font = "48px serif";
         ctx.fillText("", 10, 50);
         for(let i = 0; i < bufferLength; i++) {
@@ -71,4 +71,4 @@ document.addEventListener("click", () => {
     animate();
 })
 });
-video.src = "videoplayback (3).mp4";
+video.src = "ds_3_V.mp4";
