@@ -1,5 +1,114 @@
+
+@property --deg {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@font-face {
+    font-family: "papyrus-CFY";
+    src: url(data/PAPYRUS.TTF);
+}
+
+:root {
+    --deg: 0deg;
+}
+body{
+    background-color: black;
+    margin:0%;
+    padding: 0%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
 #grid {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: 1fr 1fr 1fr;
+    display:grid;
+    justify-items: center;
+    grid-template-columns: auto auto auto;
+    padding: 10px;
+    column-gap: 10px;
+    row-gap: 10px;
+
+}
+
+#grid a {
+    display: block;
+    color:white;
+    border: 2px solid rgba(201, 20, 20, 0.8);
+    padding: 30px;
+    text-align: center;
+    font-weight:600;
+    border-radius: 20px;
+    font-family: "papyrus-CFY";
+    box-shadow: 5px 5px 10px rgb(55, 6, 92);
+    font-size: normal;
+    width:20cqmax;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    transition: border 300ms, box-shadow 300ms, font-size 300ms, color 300ms;
+}
+#grid a:hover {
+    border: 2px solid rgba(20, 201, 35, 0.8);
+    box-shadow: 7px 7px 10px rgb(150, 72, 8);
+    font-weight:9099090;
+    color:rgba(20, 201, 35, 0.8);
+}
+.cfy-big-thing {
+    font-family: "papyrus-CFY";
+    text-align: center;
+    background-image: linear-gradient(0deg, #00DBDE 20%, #FC00FF 80%);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-size: 8vw;
+    text-shadow: 0px 0px 20px rgba(36, 213, 219, 0.379), 0px 0px 30px rgba(201, 36, 219, 0.324);
+    animation: 3s infinite alternate changestuff;
+}
+
+@keyframes changestuff {
+    0% {
+        --deg: 0deg;
+        background-image: linear-gradient(var(--deg), #00DBDE 20%, #FC00FF 80%);
+    }
+    50% {
+        --deg: 180deg;
+        background-image: linear-gradient(var(--deg), #00DBDE 20%, #FC00FF 80%);
+    }
+    75% {
+        --deg: 14deg;
+        background-image: linear-gradient(var(--deg), #00DBDE 20%, #FC00FF 80%);
+    }
+    100% {
+        --deg: 360deg;
+        background-image: linear-gradient(var(--deg), #00DBDE 20%, #FC00FF 80%);
+    }
+}
+canvas{
+    position:absolute;
+    left:0;
+    top:0;
+    z-index:-1;
+  }
+.m {
+    background-image: linear-gradient(45deg, #00DBDE 20%, #FC00FF 80%);
+    display: block;
+    color:white;
+    border: 2px solid rgba(201, 20, 20, 0.8);
+    padding: 30px;
+    text-align: center;
+    font-weight:600;
+    border-radius: 20px;
+    font-family: "papyrus-CFY";
+    box-shadow: 5px 5px 10px rgb(55, 6, 92);
+    font-size: normal;
+    width:20cqmax;
+    transition: border 300ms, box-shadow 300ms, font-size 300ms, color 300ms;
+    margin-left: 36.5%;
+}
+.m:hover {
+    border: 2px solid rgba(20, 201, 35, 0.8);
+    box-shadow: 7px 7px 10px rgb(150, 72, 8);
+    font-weight:9099090;
+    color:rgba(20, 201, 35, 0.8);
 }

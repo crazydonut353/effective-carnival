@@ -2,28 +2,86 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, light only, user-scalable=no">
+    <link rel="stylesheet" href="style.css">
+    <title>CheeseFollowsYou</title>
 </head>
+
 <body>
+    
+    <div id="home-button" href="https://discord.gg/5e9TqNNsmA" style = "  position: fixed;
+    top: 1%;
+    left: 91%;
+    font-family: monospace;
+    font-size: 1rem;
+      text-align: center;
+      background-image: linear-gradient(0deg, #5865f2 20%, #5865f2 80%);
+      text-shadow: 0px 0px 20px rgba(36, 213, 219, 0.379), 0px 0px 30px rgba(201, 36, 219, 0.324);
+      border-radius: 5px;">
+  
+    <a href="https://discord.gg/5e9TqNNsmA" target="_blank" rel="noopener noreferrer" title="Our Discord Server!"><img src="images/discordlogo.png" /><br /></a>
+  </div >
+    <div class="cfy-big-thing">CheeseFollowsYou</div>
+    <a href = "./merging/merging.html" class="m">Merge game</a>
     <div id="grid">
         <a href="./raiseacheese/raiseacheese.html">Raise a Cheese</a>
         <a href="./example/example.html">Example!!</a>
         <a href="./Catch-Cheesie/Catch-Cheesie.html">Catch Cheesie</a>
-        <a href="./WatchBackNow/WatchBackNow.html" id="playlist"> Playlist </a>
         <a href="./DevUpdates/DevUpdates.html"> dev updates </a>
         <a href="./Jarnett/jarnett.html"> Jarnett Boss Fight </a>
         <a href="./Raise-A-Forge/Raise-A-Forge.html"> froge clicker </a>
-        <a href="./download.html"> Click to download slice of life</a>
-        <a href="./Grimace.zip"> Click to download the dead trend</a>
+        <a> Slice of Life download is temporarely down due to the app getting flagged by windows.</a>
+        <a> Grimace Game download is temporarely down due to the app getting flagged by windows.</a>
         <a href="./Ball/Ball.html"> Ball simulator </a>
         <a href="./paint/paint.html"> paint </a>
-        <a href="./CA/indexd.html"> Nolanns adventure </a>
+        <a href="./CA/indexd.html"> Nolan's adventure </a>
         <a href="./RealPlaylist/RealPlaylist.html"> The REAL playlist </a>
         <a href="./DVDmason/DVDmason.html"> DVD Mason </a>
-        <a href="./ds_intro_RAD/index.html">Demon Slayer oponing but better...</a>
+        <a href="./ds_intro_RAD/index.html">Audio Visulizer</a>
+
             
     </div>
+    <h2 style = "text-align:center;color:rgb(135, 0, 189);">YOUR Fortune cookie:</h2>
+    <h1 id="fortune" style = "text-align:center;color:rgb(135, 0, 189);"></h1>
+    <script>
+        var fortunes = [['Hmm... I sense BOSO in ur past.','Mr.cat says you will live a great life without seeing internetsounds', "Cheesie is real!?!?!?", "cheese. delicious"],
+            ['u are a cool person', 
+            'I ate ur fortune cookie. Yum😋',
+            'when will site be up'], //medium
+            [
+            'go to https://cheesefollowsyou.bridgeburning.net/media/test.mp3 for a seceret', 
+            'leo = coooool', 
+            'You love someone 🥰🥶❄🌠',
+            "Forever in our hearts, Elijah. May he see fit in his new school and may we continue to honor his departure.",
+            "You will challenge Jarnett, then fail.",
+            "You will kill a... kill, today.",
+            "I hear that if you press SHIFT+2 you will get rizzed"
+        ], //rare
+            [
+    "on Feburary 31 you will meet your dad",
+    "today you will say hi",
+    "you will have a good day",
+    "you will have a BAD day (tomarrow)",
+    "oh... oh wow... its better you dont know...",
+    "Its blurry but I see a heart. wonder what it means...",
+    "you will chase something today. metaphoicaly.",
+    "to answer your question no. thats not probable",
+    "You will get a victory royale in fortnight"], //ultimantw\3aa
+    ];
+    var rando = fortunes[Math.floor(Math.random() * fortunes.length)];
+    var rando2 = rando[Math.floor(Math.random() * rando.length)];
+    document.getElementById("fortune").innerText = `⭐ ${rando2} ⭐`;
+    document.addEventListener('keydown', function(event) {
+    if (event.shiftKey && event.keyCode === 50) {
+        window.location = "rizz.html"
+    }
+  });
+
+
+    </script>
+    <canvas id="c"></canvas>
+    <script src="./pumpkin-rain.js"></script>
+    
 </body>
 </html>
