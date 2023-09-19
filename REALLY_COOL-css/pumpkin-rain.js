@@ -26,6 +26,7 @@ function loop() {
         particles.push([Math.floor(Math.random() * ctx.canvas.width),-(pumpkinImage.height/2),Math.floor(Math.random() * 30)+3,Math.floor(Math.random() * 30)-15]);
         lastFrame = Date.now()
     }
+    
     particles.forEach(element => {
         
         //ctx.drawImage(pumpkinImage, element[0], element[1], 150, 100);
