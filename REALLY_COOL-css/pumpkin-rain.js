@@ -15,7 +15,7 @@ var onedegree = Math.PI/360;
 var pumpkinImage = new Image();
 pumpkinImage.onload = loop;
 particles.push([Math.floor(Math.random() * ctx.canvas.width),-(pumpkinImage.height/2),Math.floor(Math.random() * 30)+3,Math.floor(Math.random() * 30)-15]);
-pumpkinImage.src = "./images/pumpkin.png"
+pumpkinImage.src = new Array("./images/pumpkin.png", "./images/cookie.svg")[Math.floor(Math.floor(Math.random()*500)/499)]
 
 function loop() {
     

@@ -34,13 +34,13 @@ body{
 #grid a {
     display: block;
     color:white;
-    border: 2px solid rgba(201, 20, 20, 0.8);
+    border: 2px solid rgb(102, 0, 133);
     padding: 30px;
     text-align: center;
     font-weight:600;
     border-radius: 20px;
     font-family: "papyrus-CFY";
-    box-shadow: 5px 5px 10px rgb(158, 81, 0);
+    box-shadow: 5px 5px 10px rgb(102, 0, 133);
     font-size: normal;
     width:20cqmax;
     -webkit-backdrop-filter: blur(5px);
@@ -48,10 +48,10 @@ body{
     transition: border 300ms, box-shadow 300ms, font-size 300ms, color 300ms;
 }
 #grid a:hover {
-    border: 2px solid rgba(20, 201, 35, 0.8);
-    box-shadow: 7px 7px 10px rgba(150, 72, 8, 0.443);
+    border: 2px solid #EB6122;
+    box-shadow: 7px 7px 10px #EB6122;
     font-weight:9099090;
-    color:rgba(20, 201, 35, 0.8);
+    color:#EB6122;
 }
 .cfy-big-thing {
     font-family: "papyrus-CFY";
