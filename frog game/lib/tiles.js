@@ -35,12 +35,16 @@ class Tiles {
     }
     render(ctx, scaledTileSize) {
         
-        const startCol = Math.floor(this.camera.x / scaledTileSize);
+        var camera = {};
+        camera.x = this.camera.x-(this.camera.width/2);
+        camera.y = this.camera.y-(this.camera.height/2);
+        
+        const startCol = Math.floor(camera.x / scaledTileSize);
         const endCol = (startCol + Math.ceil(this.camera.width / scaledTileSize));
-        const startRow = Math.floor(this.camera.y / scaledTileSize);
+        const startRow = Math.floor(camera.y / scaledTileSize);
         const endRow = (startRow + Math.ceil(this.camera.height / scaledTileSize));
-        const offsetX = -this.camera.x + startCol * scaledTileSize;
-        const offsetY = -this.camera.y + startRow * scaledTileSize;
+        const offsetX = -camera.x + startCol * scaledTileSize;
+        const offsetY = -camera.y + startRow * scaledTileSize;
 
         for (let c = startCol; c <= endCol; c++) {
             for (let r = startRow; r <= endRow; r++) {

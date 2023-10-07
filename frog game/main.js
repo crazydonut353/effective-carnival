@@ -18,6 +18,8 @@ var MainLayer;
  */
 var player;
 
+var GMKeys = {}
+
 var imageAssets = new Images(["./TILED/TILESET/tiles.png", "./images/player.png"]);
 
 function resize() {
@@ -27,6 +29,8 @@ function resize() {
     document.body.style.margin = "0px";
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight+1;
+    MainLayer.camera.width=canvas.width;
+    MainLayer.camera.height=canvas.height;
     canvas.style.width = "100%";
     canvas.style.height = "100%";
     ctx.imageSmoothingEnabled = false;
@@ -39,27 +43,39 @@ async function init() {
     
     let tdata = await new TilesetLoader().parse("./TILED/TILESET/tiles.json")
     
-    resize();
+    
     
     MainLayer = new Tiles(map, canvas, imageAssets.files[0],tdata,3);
     
-    player = new Player(imageAssets.files[1]);
+    resize();
     
-    //MainLayer.camera.x = 10*50;
-    //MainLayer.camera.y = 30*50;
+    player = new Player(imageAssets.files[1],MainLayer);
     
+    player.x = (10*50);
+    player.y = (30*50);
+    
+    player.middleX = (canvas.width/2)-50;
+    player.middleY = (canvas.height/2)-50;
     
     gameloop();
 }
 function gameloop() {
-    player.ahh()
+    player.middleX = (canvas.width/2)-50; // note to self: delete on release
+    player.middleY = (canvas.height/2)-50;// note to self: delete on release
+    
+    MainLayer.camera.x = player.x;
+    MainLayer.camera.y = player.y;
     
     resize();
     
     MainLayer.render(ctx,50);
+    
+    player.update(GMKeys,ctx);
     
     player.draw(ctx);
     
     requestAnimationFrame(gameloop);
 }
 init();
+document.addEventListener("keydown", (e)=>{GMKeys[e.key]=true});
+document.addEventListener("keyup", (e)=>{GMKeys[e.key]=false});
