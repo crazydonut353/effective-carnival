@@ -43,7 +43,8 @@ class ParticleCollection {
         this.particles=[];
     }
     pushParticle(x, y, angle, scale){
-        this.particles.push(new Particle(x,y,angle,this.particleImage,scale));
+        let a = this.particles.push(new Particle(x,y,angle,this.particleImage,scale));
+        return a-1;
     }
     /**
      * 
