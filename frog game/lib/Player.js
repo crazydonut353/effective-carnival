@@ -42,27 +42,49 @@ class Player {
                 const tile = this.layer.map.getTile(c, r);
                 const screenx = (c - startCol) * 50 + offsetX;
                 const screeny = (r - startRow) * 50 + offsetY;
-                const x = c*50;
-                const y = r*50;
+                var x=this.x;
+                var y=this.y;
+                if(this.velocityY>0){
+                    y = (r*50)-50;
+                }
+                if(this.velocityY<0){
+                    y = (r*50)+50;
+                }
+                
+                
+                
                 
                 if(tile!=3){coll=true}
                 
-                if(coll){callbackFn(x,y,coll);}
+                if(coll){callbackFn(x,y,screenx,screeny);}
+                
                 
             }
         }
     }
     
     update(GMKeys,ctx) {
-        this.velocityX = this.velocityX*0.8;
-        this.velocityY = 7;
+        this.velocityX = this.velocityX*0.5;
         
-        this.checkCollisionBox((x,y,coll)=>{
+        this.velocityY+=0.5;
+        
+        
+        
+        
+        this.checkCollisionBox((x,y,screenx,screeny)=>{
             console.log(y)
-            ctx.strokeRect(x,y,50,50);
+            ctx.strokeRect(screenx+40,screeny+40,50,50);
+            ctx.strokeText(x,40,50)
             this.y=y;
+            this.x=x;
             this.velocityY = 0;
+            
         });
+        GMKeys["a"]?this.velocityX-=2:null;
+        GMKeys["d"]?this.velocityX+=2:null;
+        
+        GMKeys[" "]||GMKeys["w"]?this.velocityY  = -7:null;
+        
         
         this.x+=this.velocityX;
         this.y+=this.velocityY;
