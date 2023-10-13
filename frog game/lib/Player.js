@@ -9,8 +9,10 @@ class Player {
         this.layer = mainlayer;
         this.x = 0;
         this.y = 0;
-        this.velocityX = 0;
-        this.velocityY = 0;
+        this.width=100;
+        this.height=100;
+        this.velocity={x:0,y:0};
+        this.jumpHeight=30;
     }
     ahh(){
         this.layer.tilemap[0] = 3; //test for thing
@@ -28,43 +30,104 @@ class Player {
         ctx.drawImage(this.spritesheet,0,0,32,32,this.middleX,this.middleY,100,100);
         ctx.restore();
     }
-    checkCollisionBox(callbackFn){
-        const startCol = Math.floor(this.x / 50);
-        const endCol = (startCol + 1);
-        const startRow = Math.floor(this.y / 50);
-        const endRow = (startRow + 1);
-        const offsetX = -this.x + startCol * 50;
-        const offsetY = -this.y + startRow * 50;
-        
-        for (let c = startCol; c <= endCol; c++) {
-            for (let r = startRow; r <= endRow; r++) {
-                var coll=false;
-                const tile = this.layer.map.getTile(c, r);
-                const screenx = (c - startCol) * 50 + offsetX;
-                const screeny = (r - startRow) * 50 + offsetY;
-                const x = c*50;
-                const y = r*50;
-                
-                if(tile!=3){coll=true}
-                
-                if(coll){callbackFn(x,y,coll);}
-                
-            }
-        }
-    }
     
-    update(GMKeys,ctx) {
-        this.velocityX = this.velocityX*0.8;
-        this.velocityY = 7;
-        
-        this.checkCollisionBox((x,y,coll)=>{
-            console.log(y)
-            ctx.strokeRect(x,y,50,50);
-            this.y=y;
-            this.velocityY = 0;
-        });
-        
-        this.x+=this.velocityX;
-        this.y+=this.velocityY;
+    
+    update(GMKeys,ctx,nextmapFN) {
+              //                             collision script
+      //psudo code:
+      // if point y intersect (move y) else if point x intersect (move x)
+      //else, repeat for next point
+      var canJump = false;
+      var waterPower = false;
+      this.x+=this.velocity.x;
+      this.y+=this.velocity.y;
+      let startCol = Math.floor((this.x)/50);
+      let endCol = Math.ceil((this.x+this.width)/50);
+      for(let i = startCol; i < endCol; i++) {
+        let t = this.layer.map.getTile(i, Math.floor((this.y+this.height)/50));
+        if(t==4||t==5){
+            waterPower = true;
+          }
+        if(t!=this.layer.emptyTile&&t!=4&&t!=5) {
+          
+          
+          this.y=((Math.floor((this.y)/50))*50);
+          this.velocity.y = 0;
+          
+          canJump=true;
+          GMKeys["d"] ? this.velocity.x += 4 : null;
+          GMKeys["a"] ? this.velocity.x -= 4 : null;
+          
+          this.velocity.x *= 0.8;
+        } else {
+            if(this.layer.map.getTile(i, Math.floor((this.y+this.height)/50))==13){
+                console.log("a")
+            }
+          GMKeys["d"] ? this.velocity.x += 4 : null;
+          GMKeys["a"] ? this.velocity.x -= 4 : null;
+          this.velocity.x *= 0.8;
+          this.velocity.y+=0.5;
+        }
+      }
+      let startRow = Math.floor(this.y/50);
+      let endRow = Math.floor((this.y+this.height)/50);
+      //console.log(startRow + "  :  " + endRow)
+      for(let i = startRow; i < endRow; i++) {
+        let t = this.layer.map.getTile(Math.floor((this.x)/50), i);
+        if(t==4||t==5){
+            waterPower = true;
+          }
+        if(t!=this.layer.emptyTile&&t!=4&&t!=5) {
+            canJump=false;
+          this.x=((Math.ceil((this.x)/50))*50);
+          this.velocity.x = 0;
+        }
+      }
+      
+      startCol = Math.floor((this.x)/50);
+      endCol = Math.floor((this.x+this.width)/50);
+      
+      for(let i = startCol; i < endCol; i++) {
+        let t = this.layer.map.getTile(i, Math.floor((this.y)/50));
+        if(t==4||t==5){
+            waterPower = true;
+          }
+        if(t!=this.layer.emptyTile&&t!=4&&t!=5){
+          this.y=((Math.ceil((this.y)/50))*50);
+          this.velocity.y = 0;
+        }
+      }
+      
+      startRow = Math.floor(this.y/50);
+      endRow = Math.floor((this.y+this.height)/50);
+      
+      for(let i = startRow; i < endRow; i++){
+        let t = this.layer.map.getTile(Math.floor((this.x+this.width)/50), i);
+        if(t==4||t==5){
+            waterPower = true;
+          }
+        if(t!=this.layer.emptyTile&&t!=4&&t!=5) {
+          if(this.velocity.y<0||this.velocity.y>0){
+            canJump=false;
+          }
+          this.x=((Math.floor((this.x)/50))*50);
+          this.velocity.x = 0;
+          GMKeys["a"] ? this.velocity.x -= 4 : null;
+        }
+      }
+      if(waterPower){
+        this.jumpHeight=40;
+      }else{
+        this.jumpHeight=30;
+      }
+      canJump && GMKeys["w"] ? this.velocity.y -= this.jumpHeight : null;
+      /*
+      this.y=((Math.floor((player.y)/50))*50);
+      this.velocity.y = 0;
+      
+      keydown["w"] ? this.velocity.y -= this.jumpHeight : null;
+      keydown["d"] ? this.velocity.x += 4 : null;
+      keydown["a"] ? this.velocity.x -= 4 : null;
+      this.velocity.x *= 0.8;*/
     }
 }

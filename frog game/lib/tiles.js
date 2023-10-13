@@ -9,6 +9,7 @@ class Tiles {
         this.tileAtlas = tileAtlas;
         this.tilesetData = tilesetData;
         this.emptyTile = emptyTile;
+        this.backgroundColor=map.backgroundcolor;
         this.map = {
             tsize: tilesetData["tilewidth"],
             getTile(c, r) {
@@ -34,6 +35,9 @@ class Tiles {
         }
     }
     render(ctx, scaledTileSize) {
+        
+        ctx.fillStyle=this.backgroundColor;
+        ctx.fillRect(0,0,ctx.canvas.width,ctx.canvas.height);
         
         var camera = {};
         camera.x = this.camera.x-(this.camera.width/2);

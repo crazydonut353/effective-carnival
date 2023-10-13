@@ -7,6 +7,11 @@ import { Player } from "./lib/Player.js";
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
+var maps = ["./TILED/MAPS/map.json","./TILED/MAPS/pooky-pool.json", "./TILED/MAPS/FANTASTIC-fall.json"];
+var iMap = 0;
+
+var paused=false;
+
 /**
  * @type {Tiles}
  */
@@ -36,6 +41,20 @@ function resize() {
     ctx.imageSmoothingEnabled = false;
 }
 
+async function nextMap() {
+    paused=true;
+    iMap++;
+    let map = await new MapLoader().parse(maps[iMap]);
+    MainLayer.backgroundColor=map.backgroundcolor;
+    MainLayer.tilemap = map.data;
+    MainLayer.numRows = map.width;
+    MainLayer.numColumns = map.height;
+    console.log(map.data)
+    player.x = (10*50);
+    player.y = (10*50);
+    paused=false;
+}
+
 async function init() {
     await imageAssets.load();
     
@@ -52,30 +71,36 @@ async function init() {
     player = new Player(imageAssets.files[1],MainLayer);
     
     player.x = (10*50);
-    player.y = (30*50);
+    player.y = (10*50);
     
     player.middleX = (canvas.width/2)-50;
     player.middleY = (canvas.height/2)-50;
     
     gameloop();
 }
-function gameloop() {
-    player.middleX = (canvas.width/2)-50; // note to self: delete on release
-    player.middleY = (canvas.height/2)-50;// note to self: delete on release
+async function gameloop() {
     
-    MainLayer.camera.x = player.x;
-    MainLayer.camera.y = player.y;
-    
-    resize();
-    
-    MainLayer.render(ctx,50);
-    
-    player.update(GMKeys,ctx);
-    
-    player.draw(ctx);
+    if(!paused) {
+        player.middleX = (canvas.width/2); // note to self: delete on release
+        player.middleY = (canvas.height/2);// note to self: delete on release
+        
+        MainLayer.camera.x = player.x;
+        MainLayer.camera.y = player.y;
+        
+        resize();
+        
+        MainLayer.render(ctx,50);
+        
+        player.update(GMKeys,ctx);
+        
+        player.draw(ctx);
+    }
     
     requestAnimationFrame(gameloop);
 }
 init();
 document.addEventListener("keydown", (e)=>{GMKeys[e.key]=true});
 document.addEventListener("keyup", (e)=>{GMKeys[e.key]=false});
+document.addEventListener("mouseup", ()=>{
+    nextMap();
+})
