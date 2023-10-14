@@ -59,10 +59,11 @@ class Player {
           GMKeys["a"] ? this.velocity.x -= 4 : null;
           
           this.velocity.x *= 0.8;
+          if(this.layer.map.getTile(i, Math.floor((this.y+this.height)/50))==12){
+            nextmapFN()
+        }
         } else {
-            if(this.layer.map.getTile(i, Math.floor((this.y+this.height)/50))==13){
-                console.log("a")
-            }
+            
           GMKeys["d"] ? this.velocity.x += 4 : null;
           GMKeys["a"] ? this.velocity.x -= 4 : null;
           this.velocity.x *= 0.8;
@@ -78,7 +79,7 @@ class Player {
             waterPower = true;
           }
         if(t!=this.layer.emptyTile&&t!=4&&t!=5) {
-            canJump=false;
+          
           this.x=((Math.ceil((this.x)/50))*50);
           this.velocity.x = 0;
         }
@@ -107,9 +108,7 @@ class Player {
             waterPower = true;
           }
         if(t!=this.layer.emptyTile&&t!=4&&t!=5) {
-          if(this.velocity.y<0||this.velocity.y>0){
-            canJump=false;
-          }
+          
           this.x=((Math.floor((this.x)/50))*50);
           this.velocity.x = 0;
           GMKeys["a"] ? this.velocity.x -= 4 : null;
@@ -119,6 +118,10 @@ class Player {
         this.jumpHeight=40;
       }else{
         this.jumpHeight=30;
+      }
+      console.log(this.velocity.y)
+      if(this.velocity.y<0||this.velocity.y>1){
+        canJump=false;
       }
       canJump && GMKeys["w"] ? this.velocity.y -= this.jumpHeight : null;
       /*

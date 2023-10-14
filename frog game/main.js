@@ -91,7 +91,7 @@ async function gameloop() {
         
         MainLayer.render(ctx,50);
         
-        player.update(GMKeys,ctx);
+        player.update(GMKeys,ctx,nextMap);
         
         player.draw(ctx);
     }
@@ -101,6 +101,3 @@ async function gameloop() {
 init();
 document.addEventListener("keydown", (e)=>{GMKeys[e.key]=true});
 document.addEventListener("keyup", (e)=>{GMKeys[e.key]=false});
-document.addEventListener("mouseup", ()=>{
-    nextMap();
-})
