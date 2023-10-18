@@ -36,7 +36,7 @@ document.addEventListener("click", () => {
     video.loop = true;
     video.volume = 0;
     video.play();
-    audioCtx = new AudioContext();
+    audioCtx = new AudioContext(); 
     audio1.play();
     audioSource = audioCtx.createMediaElementSource(audio1);
     analyser = audioCtx.createAnalyser();

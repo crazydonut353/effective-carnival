@@ -19,24 +19,64 @@
             "scale": 0.4777,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 869.7927569604352,
-                "y": 476.2403181913334
+                "x": 867.6993929244295,
+                "y": 474.14695415532753
+            }
+        },
+        "MAPS/frantic-forest.json": {
+            "scale": 0.2888,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 514.1966759002771,
+                "y": 1549.5152354570637
+            }
+        },
+        "MAPS/halloween1.json": {
+            "scale": 0.3893,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 759.0547135884922,
+                "y": 746.2111482147443
+            }
+        },
+        "MAPS/harmon-harassment.json": {
+            "scale": 0.6569,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1358.6542852793423,
+                "y": 524.4329426092252
             }
         },
         "MAPS/map.json": {
-            "scale": 0.5187,
+            "scale": 0.5763,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 801.0410641989588,
-                "y": 802.9689608636977
+                "x": 707.0969980912719,
+                "y": 1153.045288912025
+            }
+        },
+        "MAPS/parkour-pass.json": {
+            "scale": 0.3129,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 666.3470757430489,
+                "y": 992.3298178331736
             }
         },
         "MAPS/pooky-pool.json": {
             "scale": 0.85796875,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 480.20397013294485,
-                "y": 321.10726643598616
+                "x": 478.4556547077035,
+                "y": 318.77617920233104
+            }
+        },
+        "MAPS/pumpkin-pop.json": {
+            "scale": 0.3094,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 725.5979314802845,
+                "y": 1520.6851971557853
             }
         },
         "MAPS/redfrog-tiles.json": {
@@ -44,7 +84,7 @@
         }
     },
     "last.imagePath": "C:/Users/nolan/github/effective-carnival/frog game/TILED/TILESET",
-    "map.height": 50,
+    "map.height": 40,
     "map.lastUsedFormat": "json",
     "map.width": 50,
     "openFiles": [
