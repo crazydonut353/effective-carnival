@@ -6,6 +6,8 @@ import { Player } from "./lib/Player.js";
 import { Particle, ParticleCollection } from "./lib/particle.js";
 import { AudioCollection } from "./lib/BetterAudio.js";
 
+const perfectFrameTime = 1000 / 60;
+
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
@@ -67,7 +69,7 @@ var GMPoints = {
     pumpkins:0,
     level:0
 }
-
+var lastUpdate = Date.now();
 var imageAssets = new Images([
     "./TILED/TILESET/tiles.png",
     "./images/player.png",
@@ -141,9 +143,14 @@ async function init() {
     player.middleX = (canvas.width/2)-50;
     player.middleY = (canvas.height/2)-50;
     
+    lastUpdate = Date.now();
+    
     gameloop();
 }
 async function gameloop() {
+    var now = Date.now();
+    var dt = (now - lastUpdate) / perfectFrameTime;
+    lastUpdate = Date.now();
     
     if(!paused) {
         player.middleX = (canvas.width/2); // note to self: delete on release
@@ -156,7 +163,7 @@ async function gameloop() {
         
         MainLayer.render(ctx,50);
         
-        player.update(GMKeys,ctx,nextMap,iMap,maps,spawns,audioAssets,audioContext);
+        player.update(GMKeys,ctx,nextMap,iMap,maps,spawns,audioAssets,audioContext,dt);
         
         player.draw(ctx);
         
@@ -172,7 +179,7 @@ async function gameloop() {
         
         
         ctx.font = "30px Comic Sans MS";
-        ctx.fillText(GMPoints.pumpkins, 75, 50);
+        ctx.fillText(dt, 75, 50);
     } else {
         ctx.fillStyle="black";
         ctx.fillRect(0,0,canvas.width,canvas.height);

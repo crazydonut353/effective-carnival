@@ -13,7 +13,7 @@ class Player {
         this.width=50;
         this.height=100;
         this.velocity={x:0,y:0};
-        this.jumpHeight=30;
+        this.jumpHeight=100;
         this.eggExplodeParticles=null;
         this.sounds=sounds;
         this.coins=0;
@@ -70,7 +70,7 @@ class Player {
     }
     
     
-    update(GMKeys,ctx,nextmapFN,iMap,maps,spawns,audioAssets,audioContext) {
+    update(GMKeys,ctx,nextmapFN,iMap,maps,spawns,audioAssets,audioContext,dt) {
                     //                             collision script
       //psudo code:
       // if point y intersect (move y) else if point x intersect (move x)
@@ -96,8 +96,8 @@ class Player {
       }
       var canJump = false;
       var waterPower = false;
-      this.x+=this.velocity.x;
-      this.y+=this.velocity.y;
+      this.x+=this.velocity.x*dt;
+      this.y+=this.velocity.y*dt;
       let startCol = Math.floor((this.x)/50);
       let endCol = Math.ceil((this.x+(this.width))/50);
       for(let i = startCol; i < endCol; i++) {
@@ -227,9 +227,9 @@ class Player {
         }
       }
       if(waterPower){
-        this.jumpHeight=40;
+        this.jumpHeight=70;
       }else{
-        this.jumpHeight=30;
+        this.jumpHeight=50;
       }
       
       if(this.velocity.y<0||this.velocity.y>1){
