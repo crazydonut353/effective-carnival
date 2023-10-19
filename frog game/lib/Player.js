@@ -239,7 +239,7 @@ class Player {
       if(waterPower){
         this.jumpHeight=70;
       }else{
-        this.jumpHeight=50;
+        this.jumpHeight=35;
       }
       
       if(this.velocity.y<0||this.velocity.y>1){

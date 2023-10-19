@@ -6,7 +6,7 @@ import { Player } from "./lib/Player.js";
 import { Particle, ParticleCollection } from "./lib/particle.js";
 import { AudioCollection } from "./lib/BetterAudio.js";
 
-const perfectFrameTime = 1000 / 60;
+const perfectFrameTime = 1000/80;
 
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");

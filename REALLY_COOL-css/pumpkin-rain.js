@@ -21,7 +21,7 @@ function loop() {
     
     ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
     ctx.canvas.width = window.innerWidth;
-    ctx.canvas.height = document.body.clientHeight +20;
+    ctx.canvas.height = window.innerHeight;
     if(lastFrame+(particles.length*50)<Date.now()){
         particles.push([Math.floor(Math.random() * ctx.canvas.width),-(pumpkinImage.height/2),Math.floor(Math.random() * 30)+3,Math.floor(Math.random() * 30)-15]);
         lastFrame = Date.now()

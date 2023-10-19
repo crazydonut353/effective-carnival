@@ -72,6 +72,8 @@ canvas{
     left:0;
     top:0;
     z-index:-1;
+    width:100%;
+    height:100%;
   }
 .m {
     background-image: linear-gradient(45deg, #EB6122 10%, #431C52 90%);
@@ -88,6 +90,9 @@ canvas{
     width:20cqmax;
     transition: border 300ms, box-shadow 300ms, font-size 300ms, color 300ms;
     margin-left: 36.5%;
+}
+.n {
+    width:50cqmax;
 }
 .m:hover {
     border: 2px solid rgba(20, 201, 35, 0.8);
