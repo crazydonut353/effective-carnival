@@ -70,7 +70,7 @@ class Player {
     }
     
     
-    update(GMKeys,ctx,nextmapFN,iMap,maps,spawns,audioAssets,audioContext,dt) {
+    update(GMKeys,ctx,nextmapFN,iMap,maps,spawns,audioAssets,audioContext,dt,GMPoints,tutorail,dedt) {
                     //                             collision script
       //psudo code:
       // if point y intersect (move y) else if point x intersect (move x)
@@ -120,6 +120,8 @@ class Player {
             if(iMap<maps.length-1) {
               audioAssets.playsound(3,audioContext);
               
+              tutorail.leveled = true;
+              
               let x = this.middleX;
               let y = this.middleY+this.height;
                 
@@ -157,6 +159,10 @@ class Player {
             }
         }
         if(t==21){
+            GMPoints.pumpkins++;
+            
+            tutorail.pumpkin=true
+            
           audioAssets.playsound(2,audioContext);
           
           var x = this.middleX;
@@ -171,6 +177,10 @@ class Player {
           }
         }
         if(t==2){
+            audioAssets.playsound(2,audioContext);
+            
+            dedt();
+            
           this.x = spawns[iMap][0];
           this.y = spawns[iMap][1];
         }
@@ -263,6 +273,8 @@ class Player {
         this.x = spawns[iMap][0];
         this.y = spawns[iMap][1];
       }
+      
+      GMKeys["w"] || GMKeys["a"] || GMKeys["s"] || GMKeys["d"] ? tutorail.wasd=true : null;
       
       //                            particle updating
       

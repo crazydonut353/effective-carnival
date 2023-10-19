@@ -13,6 +13,8 @@ var ctx = canvas.getContext("2d");
 
 var audioContext = new AudioContext();
 
+var dedTrans = 1;
+
 var maps = [
     "./TILED/MAPS/map.json",
     "./TILED/MAPS/pooky-pool.json",
@@ -40,8 +42,15 @@ var audioAssets = new AudioCollection([
     "./sounds/jump.wav",
     "./sounds/pickupCoin.wav",
     "./sounds/explosion.wav",
-    "./sounds/nextmap.wav"
-])
+    "./sounds/nextmap.wav",
+    "./sounds/videoplayback.m4a"
+]);
+
+var tutorail = {
+    "wasd":false,
+    "pumpkin":false,
+    "leveled":false
+}
 
 /**
  * @type {ParticleCollection}
@@ -143,6 +152,8 @@ async function init() {
     player.middleX = (canvas.width/2)-50;
     player.middleY = (canvas.height/2)-50;
     
+    audioAssets.playsound(4,audioContext);
+    
     lastUpdate = Date.now();
     
     gameloop();
@@ -163,7 +174,9 @@ async function gameloop() {
         
         MainLayer.render(ctx,50);
         
-        player.update(GMKeys,ctx,nextMap,iMap,maps,spawns,audioAssets,audioContext,dt);
+        player.update(GMKeys,ctx,nextMap,iMap,maps,spawns,audioAssets,audioContext,dt,GMPoints,tutorail,()=>{
+            dedTrans=1;
+        });
         
         player.draw(ctx);
         
@@ -179,7 +192,19 @@ async function gameloop() {
         
         
         ctx.font = "30px Comic Sans MS";
-        ctx.fillText(dt, 75, 50);
+        ctx.fillText(GMPoints.pumpkins, 75, 50);
+        
+        if(!tutorail.wasd) {
+            ctx.fillText("u are frog, use WASD to move", (canvas.width/2)-10, (canvas.height/2)-50);
+        } else if(!tutorail.pumpkin) {
+            ctx.fillText("Jump on the pumpkin to gain a point!", (canvas.width/2)-10, (canvas.height/2)-50);
+        } else if(!tutorail.leveled) {
+            ctx.fillText("parkour to the platform and jump on the rainbow egg", (canvas.width/2)-10, (canvas.height/2)-50);
+        } else {
+            ctx.fillStyle=`rgba(255,0,0,${dedTrans})`;
+            ctx.fillText("DEATH", (canvas.width/2)-10, (canvas.height/2)-50);
+            dedTrans-=0.01;
+        }
     } else {
         ctx.fillStyle="black";
         ctx.fillRect(0,0,canvas.width,canvas.height);

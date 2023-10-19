@@ -16,19 +16,19 @@
             }
         },
         "MAPS/FANTASTIC-fall.json": {
-            "scale": 0.4777,
+            "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 867.6993929244295,
-                "y": 474.14695415532753
+                "x": 581,
+                "y": 334
             }
         },
         "MAPS/frantic-forest.json": {
             "scale": 0.2888,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 514.1966759002771,
-                "y": 1549.5152354570637
+                "x": 512.4653739612188,
+                "y": 1544.321329639889
             }
         },
         "MAPS/halloween1.json": {
@@ -59,8 +59,16 @@
             "scale": 0.3129,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 666.3470757430489,
-                "y": 992.3298178331736
+                "x": 664.7491211249601,
+                "y": 990.7318632150846
+            }
+        },
+        "MAPS/pesemistic-pond.json": {
+            "scale": 0.66796875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 800.9356725146199,
+                "y": 640.7485380116958
             }
         },
         "MAPS/pooky-pool.json": {
