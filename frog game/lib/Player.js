@@ -10,9 +10,10 @@ class Player {
         this.x = 0;
         this.y = 0;
         this.pumpkinExplodeParticles=null;
-        this.width=50;
-        this.height=100;
-        this.velocity={x:0,y:0};
+        this.w=50;
+        this.h=100;
+        this.vx=0;
+        this.vy=0;
         this.jumpHeight=100;
         this.eggExplodeParticles=null;
         this.sounds=sounds;
@@ -69,192 +70,142 @@ class Player {
         ctx.restore();
     }
     
+    getBBB(rect) {
+      let bbb = {x:0,y:0,w:0,h:0}
+      if(rect.vx<0){
+        bbb.x=rect.x+rect.vx;
+        bbb.w=rect.w;
+      } else {
+        bbb.x=rect.x;
+        bbb.w=rect.w+rect.vx;
+      }
+      if(rect.vy<0){
+        bbb.y=rect.y+rect.vy;
+        bbb.h=rect.h;
+      } else {
+        bbb.y=rect.y;
+        bbb.h=rect.h+rect.vy;
+      }
+      return bbb;
+    }
+    
+    getDistances(entity, platform) {
+      let entryDistance = {x:0,y:0};
+      let exitDistance = {x:0,y:0};
+      let entryTime = {x:0,y:0};
+      let exitTime = {x:0,y:0};
+      if(this.vx>0) {
+        entryDistance.x=platform.x-(entity.x+entity.w);
+      } else {
+        entryDistance.x=entity.x-(platform.x+platform.w);
+      }
+      if(this.vy>0) {
+        entryDistance.y=platform.y-(entity.y+entity.h);
+      } else {
+        entryDistance.y=entity.y-(platform.y+platform.h);
+      }
+      
+      if(this.vx>0) {
+        exitDistance.x=(platform.x+platform.w)-entity.x;
+      } else {
+        exitDistance.x=(entity.x+entity.w)-platform.x;
+      }
+      if(this.vy>0) {
+        exitDistance.y=(platform.y+platform.h)-entity.y;
+      } else {
+        exitDistance.y=(entity.y+entity.h)-platform.y;
+      }
+      
+      entryTime.x=Math.abs(entryDistance.x/this.vx);
+      entryTime.y=Math.abs(entryDistance.y/this.vy);
+      exitTime.x=Math.abs(exitDistance.x/this.vx);
+      exitTime.y=Math.abs(exitDistance.y/this.vy);
+      
+      return {
+        entryTime:entryTime,
+        exitTime:exitTime,
+        entryDistance:entryDistance,
+        exitDistance:exitDistance
+      }
+    }
+    
+    checkForColl(data){
+      if(data.exitTime.x<data.entryTime.y||data.exitTime.y<data.entryTime.x){
+        return false;
+      } else {
+        return true;
+      }
+    }
     
     update(GMKeys,ctx,nextmapFN,iMap,maps,spawns,audioAssets,audioContext,dt,GMPoints,tutorail,dedt) {
                     //                             collision script
       //psudo code:
       // if point y intersect (move y) else if point x intersect (move x)
       //else, repeat for next point
-      if(this.velocity.x>-2&&this.velocity.x<2&&this.action!="attack"){
+      if(this.vx>-2&&this.vx<2&&this.action!="attack"){
         
         this.action = "idle";
       }
-      if(this.velocity.x<-1){
+      if(this.vx<-1){
         this.direction=1;
-      } else if(this.velocity.x>1) {
+      } else if(this.vx>1) {
         this.direction=-1;
       }
-      if(Math.abs(this.velocity.x)>10){
+      if(Math.abs(this.vx)>10){
         this.action="run"; //0-7
-      } else if(Math.abs(this.velocity.x)>10){
+      } else if(Math.abs(this.vx)>10){
         this.action="walk"; //0-7
       }
-      if(this.velocity.y < 0) {
+      if(this.vy < 0) {
         this.action = "jump"; //13-13
-      } else if(this.velocity.y > 2) {
+      } else if(this.vy > 2) {
         this.action = "fall"; //15-15
       }
-      var canJump = false;
-      var waterPower = false;
-      this.x+=this.velocity.x*dt;
-      this.y+=this.velocity.y*dt;
-      let startCol = Math.floor((this.x)/50);
-      let endCol = Math.ceil((this.x+(this.width))/50);
-      for(let i = startCol; i < endCol; i++) {
-        let t = this.layer.map.getTile(i, Math.floor((this.y+this.height)/50));
-        if(t==4||t==5){
-            waterPower = true;
+      
+      GMKeys.w?this.vy-=this.jumpHeight:null;
+      GMKeys.a?this.vx-=1:null;
+      GMKeys.d?this.vx+=1:null;
+      
+      let bbb = this.getBBB(this);
+      
+      const startCol = Math.floor((bbb.x)/50);
+      const startRow = Math.floor((bbb.y)/50);
+      
+      const endCol = Math.floor((bbb.x+bbb.w)/50);
+      const endRow = Math.floor((bbb.y+bbb.h)/50);
+      
+      for (let r = startRow; r < endRow; r++) {
+        for (let c = startCol; c < endCol; c++) {
+          let tile = this.layer.map.getTile(c,r)
+          console.log(tile);
+          let rect = {
+            x:c*50,
+            y:r*50,
+            w:50,
+            h:50
           }
-        if(t!=this.layer.emptyTile&&t!=4&&t!=5) {
+          let data = this.getDistances(this, rect);
           
-          
-          this.y=((Math.floor((this.y)/50))*50);
-          this.velocity.y = 0;
-          ((i)*50)>=Math.floor((this.x+(this.width-1))/50)*50&&((i)*50)+50<=Math.floor((this.x+(this.width-1))/50)*50?null:canJump=true;
-          
-          GMKeys["d"] ? this.velocity.x += 4 : null;
-          GMKeys["a"] ? this.velocity.x -= 4 : null;
-          
-          this.velocity.x *= 0.8;
-          if(t==12){
-            if(iMap<maps.length-1) {
-              audioAssets.playsound(3,audioContext);
-              
-              tutorail.leveled = true;
-              
-              let x = this.middleX;
-              let y = this.middleY+this.height;
-                
-              for(let i = 0; i<20; i++){
-                  let a = this.eggExplodeParticles.pushParticle(x,y,0,50);
-                  this.eggExplodeParticles.particles[a].velocity.x=Math.floor(Math.random() * 20)-10; 
-                  this.eggExplodeParticles.particles[a].velocity.y=Math.floor(Math.random() * 20)-10; 
-                  this.eggExplodeParticles.particles[a].velocity.rotation=this.eggExplodeParticles.particles[a].velocity.x;
-              }
-              nextmapFN()
-            }else{
-              var x = this.middleX;
-              var y = this.middleY+this.height;
-                
-              for(let s = 0; s<20; s++){
-                  let a = this.eggExplodeParticles.pushParticle(x,y,0,50);
-                  this.eggExplodeParticles.particles[a].velocity.x=Math.floor(Math.random() * 20)-10; 
-                  this.eggExplodeParticles.particles[a].velocity.y=Math.floor(Math.random() * 20)-10; 
-                  this.eggExplodeParticles.particles[a].velocity.rotation=this.eggExplodeParticles.particles[a].velocity.x;
-              }
-              for (let b = 0; b < 30; b++) {
-                var x = Math.floor(Math.random() * canvas.width);
-                var y = Math.floor(Math.random() * canvas.height);
-                
-                for(let r = 0; r<20; r++){
-                  let a = this.eggExplodeParticles.pushParticle(x,y,0,50);
-                  this.eggExplodeParticles.particles[a].velocity.x=Math.floor(Math.random() * 20)-10; 
-                  this.eggExplodeParticles.particles[a].velocity.y=Math.floor(Math.random() * 20)-10; 
-                  this.eggExplodeParticles.particles[a].velocity.rotation=this.eggExplodeParticles.particles[a].velocity.x;
-                }
-                this.layer.tilemap[this.layer.map.getTileIndex(i, Math.floor((this.y+this.height)/50))] = 4;
-              }
-              
-              
+          if(this.checkForColl(data)){
+            if(tile!=this.layer.emptyTile){
+              this.vx=0;
             }
-        }
-        if(t==21){
-            GMPoints.pumpkins++;
-            
-            tutorail.pumpkin=true
-            
-          audioAssets.playsound(2,audioContext);
-          
-          var x = this.middleX;
-          var y = this.middleY+this.height;
-            
-          for(let s = 0; s<20; s++){
-              let a = this.pumpkinExplodeParticles.pushParticle(x,y,0,30);
-              this.pumpkinExplodeParticles.particles[a].velocity.x=Math.floor(Math.random() * 20)-10; 
-              this.pumpkinExplodeParticles.particles[a].velocity.y=Math.floor(Math.random() * 20)-10; 
-              this.pumpkinExplodeParticles.particles[a].velocity.rotation=this.pumpkinExplodeParticles.particles[a].velocity.x;
-              this.layer.tilemap[this.layer.map.getTileIndex(i, Math.floor((this.y+this.height)/50))] = 4;
           }
         }
-        if(t==2){
-            audioAssets.playsound(2,audioContext);
-            
-            dedt();
-            
-          this.x = spawns[iMap][0];
-          this.y = spawns[iMap][1];
-        }
-        } else {
-            
-          GMKeys["d"] ? this.velocity.x += 4 : null;
-          GMKeys["a"] ? this.velocity.x -= 4 : null;
-          this.velocity.x *= 0.8;
-          this.velocity.y+=0.5;
-        }
-      }
-      let startRow = Math.floor(this.y/50);
-      let endRow = Math.floor((this.y+this.height)/50);
-      //console.log(startRow + "  :  " + endRow)
-      for(let i = startRow; i < endRow; i++) {
-        let t = this.layer.map.getTile(Math.floor((this.x)/50), i);
-        if(t==4||t==5){
-            waterPower = true;
-          }
-        if(t!=this.layer.emptyTile&&t!=4&&t!=5) {
-          
-          this.x=((Math.ceil((this.x)/50))*50);
-          this.velocity.x = 0;
-        }
       }
       
-      startCol = Math.floor((this.x)/50);
-      endCol = Math.floor((this.x+(this.width))/50);
+      audioContext.resume();
       
-      for(let i = startCol; i < endCol; i++) {
-        let t = this.layer.map.getTile(i, Math.floor((this.y)/50));
-        if(t==4||t==5){
-            waterPower = true;
-          }
-        if(t!=this.layer.emptyTile&&t!=4&&t!=5){
-          this.y=((Math.ceil((this.y)/50))*50);
-          this.velocity.y = 0;
-        }
-      }
-      
-      startRow = Math.floor(this.y/50);
-      endRow = Math.floor((this.y+this.height)/50);
-      
-      for(let i = startRow; i < endRow; i++){
-        let t = this.layer.map.getTile(Math.floor((this.x+this.width)/50), i);
-        if(t==4||t==5){
-            waterPower = true;
-          }
-        if(t!=this.layer.emptyTile&&t!=4&&t!=5) {
-          
-          this.x=((Math.floor((this.x)/50))*50);
-          this.velocity.x = 0;
-          GMKeys["a"] ? this.velocity.x -= 4 : null;
-        }
-      }
-      if(waterPower){
-        this.jumpHeight=70;
-      }else{
-        this.jumpHeight=50;
-      }
-      
-      if(this.velocity.y<0||this.velocity.y>1){
-        canJump=false;
-      }
-      canJump && GMKeys["w"] ? this.velocity.y -= this.jumpHeight : null;
-      canJump && GMKeys["w"] ? audioAssets.playsound(0,audioContext) : null;
+      this.x+=this.vx;
+      this.y+=this.vy;
       /*
       this.y=((Math.floor((player.y)/50))*50);
-      this.velocity.y = 0;
+      this.vy = 0;
       
-      keydown["w"] ? this.velocity.y -= this.jumpHeight : null;
-      keydown["d"] ? this.velocity.x += 4 : null;
-      keydown["a"] ? this.velocity.x -= 4 : null;
-      this.velocity.x *= 0.8;*/
+      keydown["w"] ? this.vy -= this.jumpHeight : null;
+      keydown["d"] ? this.vx += 4 : null;
+      keydown["a"] ? this.vx -= 4 : null;
+      this.vx *= 0.8;*/
 
       
       
