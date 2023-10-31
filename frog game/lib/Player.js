@@ -193,11 +193,17 @@ class Player {
           }
         }
       }
+      if(waterPower){
+        this.jumpHeight=70;
+      }else{
+        this.jumpHeight=50;
+      }
       
-      audioContext.resume();
-      
-      this.x+=this.vx;
-      this.y+=this.vy;
+      if(this.velocity.y<0||this.velocity.y>1){
+        canJump=false;
+      }
+      canJump && GMKeys["w"] ? this.velocity.y -= this.jumpHeight : null;
+      canJump && GMKeys["w"] ? audioAssets.playsound(0,audioContext) : null;
       /*
       this.y=((Math.floor((player.y)/50))*50);
       this.vy = 0;

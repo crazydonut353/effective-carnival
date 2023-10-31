@@ -51,19 +51,24 @@
             }
         },
         "MAPS/map.json": {
-            "scale": 0.5763,
+            "scale": 2,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 707.0969980912719,
-                "y": 1153.045288912025
+                "x": 833,
+                "y": 810.5
             }
         },
         "MAPS/parkour-pass.json": {
-            "scale": 0.3129,
+            "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
+<<<<<<< HEAD
                 "x": 765.4202620645574,
                 "y": 765.4202620645574
+=======
+                "x": 1134,
+                "y": 364
+>>>>>>> 9446d5619e46f413631c03bebf198d4795a1562b
             }
         },
         "MAPS/pesemistic-pond.json": {
