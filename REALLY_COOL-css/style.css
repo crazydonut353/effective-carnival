@@ -9,6 +9,11 @@
     font-family: "papyrus-CFY";
     src: url(data/PAPYRUS.TTF);
 }
+@font-face {
+    font-family: "graffiti-CFY";
+    src: url(./aAnotherTag.ttf);
+}
+
 
 :root {
     --deg: 0deg;
@@ -54,7 +59,7 @@ body{
     color:#EB6122;
 }
 .cfy-big-thing {
-    font-family: "papyrus-CFY";
+    font-family: "graffiti-CFY";
     text-align: center;
     background-image: linear-gradient(45deg, #EB6122 10%, #431C52 90%);
     -webkit-background-clip: text;
@@ -75,28 +80,6 @@ canvas{
     width:100%;
     height:100%;
   }
-.m {
-    background-image: linear-gradient(45deg, #EB6122 10%, #431C52 90%);
-    display: block;
-    color:white;
-    border: 2px solid rgba(201, 20, 20, 0.8);
-    padding: 30px;
-    text-align: center;
-    font-weight:600;
-    border-radius: 20px;
+#fortune {
     font-family: "papyrus-CFY";
-    box-shadow: 5px 5px 10px rgb(55, 6, 92);
-    font-size: normal;
-    width:20cqmax;
-    transition: border 300ms, box-shadow 300ms, font-size 300ms, color 300ms;
-    margin-left: 36.5%;
-}
-.n {
-    width:50cqmax;
-}
-.m:hover {
-    border: 2px solid rgba(20, 201, 35, 0.8);
-    box-shadow: 7px 7px 10px rgb(150, 72, 8);
-    font-weight:9099090;
-    color:rgba(20, 201, 35, 0.8);
 }
