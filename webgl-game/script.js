@@ -45,18 +45,22 @@ function helloTriangle() {
   //
   const triangleVertices = [
     // Top middle
-    0.0, 0.5,
+    0.5, 0.5,
     // Bottom left
     -0.5, -0.5,
     // Bottom right
-    0.5, -0.5
+    0.5, -0.5,
+    
+    -0.5, 0.5,
+    0.5, 0.5,
+    0.5, 0.5,
   ];
   
   const RADCOLORS = new Uint8Array([ 
     255, 0, 0,
-    0, 255, 0,
-    0, 0, 255,
-   ]);
+    200, 100, 0,
+    255, 50, 0,
+  ]);
    
   const rainbowTriangleColorBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, rainbowTriangleColorBuffer);
@@ -187,9 +191,12 @@ function helloTriangle() {
   // Draw call (Primitive assembly (which vertices form triangles together?))
   s(gl)
 }
-
+/**
+ * 
+ * @param {WebGL2RenderingContext} gl 
+ */
 function s(gl) {
-  gl.drawArrays(gl.TRIANGLES, 0, 3);
+  gl.drawArrays(gl.TRIANGLES, 0, 6);
   
   requestAnimationFrame(s);
 }
