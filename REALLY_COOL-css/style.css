@@ -24,6 +24,8 @@ body{
     padding: 0%;
     overflow-x: hidden;
     overflow-y: scroll;
+    color:#22ebd7;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 #grid {
@@ -37,15 +39,16 @@ body{
 }
 
 #grid a {
+    font-style: italic;
+    text-decoration:none;
     display: block;
-    color:white;
-    border: 2px solid rgb(102, 0, 133);
+    color:rgb(159, 150, 255);
+    border: 2px solid rgb(9, 107, 199);
     padding: 30px;
     text-align: center;
-    font-weight:600;
     border-radius: 20px;
-    font-family: "papyrus-CFY";
-    box-shadow: 5px 5px 10px rgb(102, 0, 133);
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    box-shadow: 5px 5px 10px rgb(50, 9, 199);
     font-size: normal;
     width:20cqmax;
     -webkit-backdrop-filter: blur(5px);
@@ -53,21 +56,21 @@ body{
     transition: border 300ms, box-shadow 300ms, font-size 300ms, color 300ms;
 }
 #grid a:hover {
-    border: 2px solid #EB6122;
-    box-shadow: 7px 7px 10px #EB6122;
+    border: 2px solid #07d9c8;
+    box-shadow: 7px 7px 10px #00e1ff;
     font-weight:9099090;
-    color:#EB6122;
+    color:#22deeb;
 }
 .cfy-big-thing {
     font-family: "graffiti-CFY";
     text-align: center;
-    background-image: linear-gradient(45deg, #EB6122 10%, #431C52 90%);
+    background-image: linear-gradient(45deg, #22ebd7 10%, #1d1ac5 90%);
     -webkit-background-clip: text;
     -moz-background-clip: text;
     background-clip: text;
     color: transparent;
     font-size: 8vw;
-    text-shadow: 0px 0px 20px rgba(196, 115, 0, 0.497), 0px 0px 30px rgba(201, 36, 219, 0.324);
+    text-shadow: 0px 0px 20px rgba(22, 193, 255, 0.497), 0px 0px 30px rgba(201, 36, 219, 0.324);
     
 }
 
@@ -81,5 +84,18 @@ canvas{
     height:100%;
   }
 #fortune {
-    font-family: "papyrus-CFY";
+    color:#22ebd7;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+@media (max-width: 679px) {
+    #grid {
+        display:grid;
+        justify-content: center;
+        grid-template-columns: repeat(auto-fill, 199px);;
+        padding: 10px;
+        column-gap: 10px;
+        row-gap: 10px;
+    
+    }
 }
