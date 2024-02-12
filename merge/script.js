@@ -17,7 +17,8 @@ const ctx = canvas.getContext('2d');
 // Main game elements
 
 var wincount = 0;
-var money = 0;
+var money = 44;
+var level = 1;
 
 var lastWin = Date.now();
 
@@ -34,6 +35,9 @@ var map = {
     ],
     tsize:100
 }
+var shopUiData = {
+    
+}
 
 // Other game vars
 
@@ -47,17 +51,104 @@ var mouse = {
     originalIndex:0
 };
 
+const ui = [
+    {
+        title:"bomb",
+        cost:200,
+        eventFunc:function() {
+            if(level<4) {
+                audioAssets.playsound(3,audioContext);
+                map.tiles.forEach((v,i,a)=>{
+                    a[i]=(level*4)+1;
+                });
+                level++;
+                for(let i = 0; i<20; i++){
+                    let a = bombParticles.pushParticle(canvas.width/2,canvas.height/2,0,50);
+                    bombParticles.particles[a].velocity.x=Math.floor(Math.random() * 20)-10; 
+                    bombParticles.particles[a].velocity.y=Math.floor(Math.random() * 20)-10; 
+                    bombParticles.particles[a].velocity.rotation=bombParticles.particles[a].velocity.x;
+                }
+            } else {
+                level=0;
+                map.tiles.forEach((v,i,a)=>{
+                    a[i]=(level*4)+1;
+                });
+                level=1;
+                for(let i = 0; i<20; i++){
+                    let a = winParticles.pushParticle(canvas.width/2,canvas.height/2,0,50);
+                    winParticles.particles[a].velocity.x=Math.floor(Math.random() * 20)-10; 
+                    winParticles.particles[a].velocity.y=Math.floor(Math.random() * 20)-10; 
+                    winParticles.particles[a].velocity.rotation=winParticles.particles[a].velocity.x;
+                }
+                money += Math.floor(Math.random()*1000);
+                wincount++;
+                lastWin = Date.now();
+                audioAssets.playsound(2,audioContext);
+                for(let i = 0; i<20; i++){
+                    let a = bombParticles.pushParticle(canvas.width/2,canvas.height/2,0,50);
+                    bombParticles.particles[a].velocity.x=Math.floor(Math.random() * 20)-10; 
+                    bombParticles.particles[a].velocity.y=Math.floor(Math.random() * 20)-10; 
+                    bombParticles.particles[a].velocity.rotation=bombParticles.particles[a].velocity.x;
+                }
+            }
+        },
+        imgIndex:2,
+        bg:"rgb(237, 119, 0)",
+        discription:"explodes you to the next level"
+    },
+    {
+        title:"gamble",
+        cost:7000,
+        eventFunc:function() {
+            money += Math.floor(Math.random()*8000);
+            audioAssets.playsound(4,audioContext);
+        },
+        imgIndex:4,
+        bg:"rgb(100, 0, 74)",
+        discription:"gambles"
+    },
+    {
+        title:"chez",
+        cost:44,
+        eventFunc:function() {
+            for(let i = 0; i<10; i++){
+                let a = chezParticles.pushParticle(Math.floor(Math.random()*canvas.width),0,0,50);
+                chezParticles.particles[a].velocity.x=Math.floor(Math.random() * 20)-10; 
+                chezParticles.particles[a].velocity.y=Math.floor(Math.random() * 20)-10; 
+                chezParticles.particles[a].velocity.rotation=chezParticles.particles[a].velocity.x;
+            }
+        },
+        imgIndex:5,
+        bg:"rgb(62, 0, 22)",
+        discription:"summons falling chez"
+    }
+];
+const uiData = {
+    width: 100,
+    height: 100,
+    gap: 10,
+    bottomGap:10
+}
+
 const imageAssets = new Images([
     "./images/tiles.png",
-    "./images/rainbowchez.png"
+    "./images/rainbowchez.png",
+    "./images/Bomb.png",
+    "./images/spark.png",
+    "./images/gamble.png",
+    "./images/chez.png"
 ]);
 const audioAssets = new AudioCollection([
     "./sounds/mergeSound.wav",
     "./sounds/Final.wav",
-    "./sounds/01.wav"
+    "./sounds/01.wav",
+    "./sounds/explosion.wav",
+    "./sounds/gamble.wav"
 ]);
 
 var winParticles = null;
+var bombParticles = null;
+var chezParticles = null;
 
 // Game functions
 
@@ -73,6 +164,8 @@ async function init() {
     await audioAssets.getFile(audioContext);
     
     winParticles = new ParticleCollection(imageAssets.files[1]);
+    bombParticles = new ParticleCollection(imageAssets.files[3]);
+    chezParticles = new ParticleCollection(imageAssets.files[5]);
     
     resize();
     
@@ -82,7 +175,25 @@ async function init() {
     gameloop();
 }
 
+function mouseInUi(x, y) {
+    for (let i = 0; i < ui.length; i++) {
+        const boxLeft = ((uiData.width+uiData.gap)*i)+((canvas.width/2)-((uiData.width+(uiData.gap/2))*(ui.length/2)));
+        const boxRight = boxLeft+uiData.width;
+        const boxTop = canvas.height-(uiData.height+uiData.bottomGap);
+        const boxBottom = boxTop+uiData.height;
+        if( x < boxRight && boxLeft < x && y > boxTop && y < boxBottom ){
+            return ui[i];
+        }
+    }
+}
+
 function mouseDragStart(e) {
+    const shopItem = mouseInUi(mouse.x,mouse.y);
+    if(shopItem != undefined && money >= shopItem.cost) {
+        shopItem.eventFunc();
+        money -= shopItem.cost;
+    }
+    
     const tileIndex = Math.floor((mouse.x-map.x)/map.tsize)+(Math.floor((mouse.y-map.y)/map.tsize)*map.colomns);
     const itemDragging = map.tiles[tileIndex];
     
@@ -120,14 +231,17 @@ function placeTile(index, tile) {
             case 4:
                 map.tiles.forEach((v,i,a)=>{a[i]=tile+1});
                 audioAssets.playsound(1,audioContext);
+                level++;
                 break;
             case 8:
                 map.tiles.forEach((v,i,a)=>{a[i]=tile+1});
                 audioAssets.playsound(1,audioContext);
+                level++;
                 break;
             case 12:
                 map.tiles.forEach((v,i,a)=>{a[i]=tile+1});
                 audioAssets.playsound(1,audioContext);
+                level++;
                 break;
             case 16:
                 map.tiles.forEach((v,i,a)=>{a[i]=1}); // Reset tiles
@@ -141,6 +255,7 @@ function placeTile(index, tile) {
                 wincount++;
                 lastWin = Date.now();
                 audioAssets.playsound(2,audioContext);
+                level=1;
                 break;
             default:
                 map.tiles[index]++;
@@ -160,6 +275,22 @@ function gameloop() {
 
     });
     winParticles.particles.forEach((x,i,a)=>{
+        if(x.x>=ctx.canvas.width+100||x.x<=0-100||x.y>=ctx.canvas.height+100||x.y<=0-100){
+            a.splice(i,1);
+        }
+    });
+    bombParticles.updateEach((x,i)=>{
+
+    });
+    bombParticles.particles.forEach((x,i,a)=>{
+        if(x.x>=ctx.canvas.width+100||x.x<=0-100||x.y>=ctx.canvas.height+100||x.y<=0-100){
+            a.splice(i,1);
+        }
+    });
+    chezParticles.updateEach((x,i)=>{
+
+    });
+    chezParticles.particles.forEach((x,i,a)=>{
         if(x.x>=ctx.canvas.width+100||x.x<=0-100||x.y>=ctx.canvas.height+100||x.y<=0-100){
             a.splice(i,1);
         }
@@ -195,12 +326,40 @@ function render() {
     ctx.font = "22px arial";
     ctx.fillText("Rainbow cheeses - " + wincount,0,22);
     ctx.fillText("Money - " + money + "$",0,44);
+    ctx.fillText("Time - " + ((Date.now()-lastWin)/1000),0,66);
+    
+    // Render ui
+    for (let i = 0; i < ui.length; i++) {
+        ctx.fillStyle = ui[i].bg;
+        ctx.fillRect(((uiData.width+uiData.gap)*i)+((canvas.width/2)-((uiData.width+(uiData.gap/2))*(ui.length/2))),canvas.height-(uiData.height+uiData.bottomGap),uiData.width,uiData.height);
+        ctx.fillStyle = "green"
+        ctx.font = "20px arial";
+        ctx.fillText(ui[i].title,((uiData.width+uiData.gap)*i)+((canvas.width/2)-((uiData.width+(uiData.gap/2))*(ui.length/2)))+(uiData.width/4),canvas.height-(uiData.height+uiData.bottomGap)+20);
+        ctx.drawImage(imageAssets.files[ui[i].imgIndex],((uiData.width+uiData.gap)*i)+((canvas.width/2)-((uiData.width+(uiData.gap/2))*(ui.length/2)))+(uiData.width/4),canvas.height-(uiData.height+uiData.bottomGap)+(uiData.height/4));
+        ctx.fillText(ui[i].cost + "$",((uiData.width+uiData.gap)*i)+((canvas.width/2)-((uiData.width+(uiData.gap/2))*(ui.length/2)))+(uiData.width/4),canvas.height-(uiData.height+uiData.bottomGap)+(uiData.height-6));
+    }
+    
+    // Render discription
+    let el = mouseInUi(mouse.x,mouse.y);
+    if(el != undefined) {
+        ctx.fillStyle = "green";
+        ctx.fillRect(mouse.x,mouse.y,ctx.measureText(el.discription).width+2,30)
+        ctx.font = "20px arial";
+        ctx.fillStyle = "tan";
+        ctx.fillText(el.discription,mouse.x,mouse.y+20);
+    }
     
     // Render particles
     
     winParticles.updateEach((element,i)=>{
         element.draw(ctx);
-    })
+    });
+    bombParticles.updateEach((element,i)=>{
+        element.draw(ctx);
+    });
+    chezParticles.updateEach((element,i)=>{
+        element.draw(ctx);
+    });
     
     // Render dragging object
     
