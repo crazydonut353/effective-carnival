@@ -109,18 +109,31 @@ const ui = [
     },
     {
         title:"chez",
-        cost:44,
+        cost:40,
         eventFunc:function() {
             for(let i = 0; i<10; i++){
                 let a = chezParticles.pushParticle(Math.floor(Math.random()*canvas.width),0,0,50);
-                chezParticles.particles[a].velocity.x=Math.floor(Math.random() * 20)-10; 
-                chezParticles.particles[a].velocity.y=Math.floor(Math.random() * 20)-10; 
+                chezParticles.particles[a].velocity.x=0; 
+                chezParticles.particles[a].velocity.y=Math.floor(Math.random() * 20); 
                 chezParticles.particles[a].velocity.rotation=chezParticles.particles[a].velocity.x;
             }
         },
         imgIndex:5,
         bg:"rgb(62, 0, 22)",
         discription:"summons falling chez"
+    },
+    {
+        title:"che",
+        cost:4,
+        eventFunc:function() {
+            let a = chezParticles.pushParticle(Math.floor(Math.random()*canvas.width),10,0,50);
+            chezParticles.particles[a].velocity.x=0; 
+            chezParticles.particles[a].velocity.y=Math.floor(Math.random() * 20); 
+            chezParticles.particles[a].velocity.rotation=chezParticles.particles[a].velocity.x;
+        },
+        imgIndex:5,
+        bg:"rgb(62, 0, 22)",
+        discription:"summons falling one chez"
     }
 ];
 const uiData = {
