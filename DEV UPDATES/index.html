@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>~NEW STUFF~ (6/9/24)</title>
+    <style>
+        body {
+            background-image: url(./IMG_9013.JPG);
+            background-repeat: no-repeat;
+            background-size: cover;
+            display:grid;
+            justify-items: center;
+            align-items: center;
+        }
+        pre {
+            text-align: center;
+            font-size:x-large;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        h1, h2 {
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            text-align: center;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="home-button" style = "  position: fixed;
+    top: 1%;
+    left: 91%;
+    font-family: monospace;
+    font-size: 1rem;
+      text-align: center;
+      background-image: linear-gradient(0deg, #00DBDE 20%, #FC00FF 80%);
+      text-shadow: 0px 0px 20px rgba(36, 213, 219, 0.379), 0px 0px 30px rgba(201, 36, 219, 0.324);
+      animation: 3s infinite alternate changestuff;
+      border-radius: 5px;">
+  
+    <a href="http://cheesefollowsyou.bridgeburning.net"><img src="../images/favicon.ico" /><br />Home</a>
+  </div >
+    <h1>
+        REDFROG 2, WebGL and more!
+    </h1>
+    <h2>
+        Introdution, Transitioning to WebGL
+    </h2>
+    <pre>
+Hi! It's been a while since we have posted one of these updates so I decided that I would FINALLY let y`all in on my progress so far!
+But first off, why have I been gone for so long?
+Why are most of the games 3000 years old?
+Where are all the games you promised?
+
+To answer all of those, I haven't found the time to
+update CFY lately which means the only person doing any work is Jack.
+I have also been going through a lot of crunch latly since I'm having to rewrite almost all my
+code to support WebGL.
+
+Anyways, lets talk about the real deal! For all my previous projects that are currently on CFY I have used the "2D" canvas API
+but that API is quite limiting since you only have an indirect access to the GPU.
+WebGL provides a good amount of access to the GPU with GLSL but it is hard to learn
+and most information about it online is misleading or very hard to find.
+
+But finally, I have mastered the fundumentals of WebGL
+and I am looking forward to remaking my games with cool effects.
+
+Move your mouse around the canvas in the WebGL example to see
+the effects of my custom fisheye* shader!
+    </pre>
+    <h2>
+        WebGL Example
+    </h2>
+    <canvas id="c"></canvas>
+    
+    <h2>
+      new stuff???
+    </h2>
+    <pre>
+Unreleased games:
+
+REDFROG 2 - WebGL version of redfrog with some new updates
+
+---------------------------------------
+
+Games:
+
+gamble bit - gambling with bits ( NO REAL GAMBLING INVOLVED )
+MERGE CHEZ - WebGL merging game
+
+---------------------------------------
+
+Other:
+
+particles (WebGL ver) - The classic "paint" experience with a twist...
+    </pre>
+    
+    <script src="script.js" type="module"></script>
+    
+    <script  id="vertex-shader-2d" type="notjs">
+        attribute vec2 a_position;
+        attribute vec2 a_texCoord;
+  
+        uniform vec2 u_resolution;
+        uniform vec2 u_translation;
+        uniform vec2 u_rotation;
+        uniform vec2 u_scale;
+        
+        varying vec2 v_texCoord;
+        
+        void main() {
+          // Scale the position
+          vec2 scaledPosition = a_position * u_scale;
+          
+            // Rotate the position
+            vec2 rotatedPosition = vec2(
+              scaledPosition.x * u_rotation.y + scaledPosition.y * u_rotation.x,
+              scaledPosition.y * u_rotation.y - scaledPosition.x * u_rotation.x);
+            
+            // Add in the translation.
+            vec2 position = rotatedPosition + u_translation;
+          
+            // convert the rectangle from pixels to 0.0 to 1.0
+            vec2 zeroToOne = position / u_resolution;
+        
+           // convert from 0->1 to 0->2
+           vec2 zeroToTwo = zeroToOne * 2.0;
+        
+           // convert from 0->2 to -1->+1 (clipspace)
+           vec2 clipSpace = zeroToTwo - 1.0;
+           
+           // pass the texCoord to the fragment shader
+           // The GPU will interpolate this value between points
+           v_texCoord = a_texCoord;
+        
+           gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+        }
+      
+      </script>
+      <script  id="fragment-shader-2d" type="notjs">
+      
+        // fragment shaders don't have a default precision so we need
+        // to pick one. mediump is a good default
+        precision mediump float;
+        
+        // our texture
+        uniform sampler2D u_image;
+        
+        // the texCoords passed in from the vertex shader.
+        varying vec2 v_texCoord;
+      
+        void main() {
+          // gl_FragColor is a special variable a fragment shader
+          // is responsible for setting the color of the pixel
+          gl_FragColor = texture2D(u_image, v_texCoord);
+        }
+      
+      </script>
+      <script  id="framebuffer-vertex-shader-2d" type="notjs">
+        
+        attribute vec2 position;
+        void main() {
+          gl_Position = vec4(position, 0.0, 1.0);
+        }
+      
+      </script>
+      <script  id="framebuffer-fragment-shader-2d" type="njs">
+        
+        precision highp float;
+        uniform sampler2D u_texture;
+        uniform vec2 resolution;
+        uniform vec2 center;
+        
+        void main() {
+          // convert the rectangle from pixels to 0.0 to 1.0
+          vec2 zeroToOne = gl_FragCoord.xy / resolution;
+          vec4 c = vec4(0.,0.,0.,1.);
+          
+          float dist = distance(center,zeroToOne);
+          
+          c = texture2D(u_texture, (center + ((zeroToOne - center) * ((dist*.41)+.7))));
+          
+          if(dist<.1) {
+            c = texture2D(u_texture, (center + ((zeroToOne - center) * ((dist*.41)+.7)))).brga;
+          }
+          
+          gl_FragColor = c;
+        }
+      
+      </script>
+</body>
+</html>

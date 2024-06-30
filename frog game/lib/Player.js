@@ -13,7 +13,7 @@ class Player {
         this.width=50;
         this.height=100;
         this.velocity={x:0,y:0};
-        this.jumpHeight=100;
+        this.jumpHeight=50;
         this.eggExplodeParticles=null;
         this.sounds=sounds;
         this.coins=0;
@@ -237,7 +237,7 @@ class Player {
         }
       }
       if(waterPower){
-        this.jumpHeight=70;
+        this.jumpHeight=40;
       }else{
         this.jumpHeight=35;
       }
