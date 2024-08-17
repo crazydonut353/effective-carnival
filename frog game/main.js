@@ -186,8 +186,9 @@ async function gameloop() {
         pumpkinExplodeParticles.updateEach((element,i)=>{
             element.draw(ctx);
         });
-        ctx.fillStyle="black"
-        ctx.drawImage(imageAssets.files[4],5,5,60,60)
+        
+        ctx.fillStyle="black";
+        ctx.drawImage(imageAssets.files[4],5,5,60,60);
         ctx.drawImage(imageAssets.files[0],32,128,32,32,10,10,50,50);
         
         

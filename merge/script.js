@@ -17,7 +17,7 @@ const ctx = canvas.getContext('2d');
 // Main game elements
 
 var wincount = 0;
-var money = 44;
+var money = 244;
 var level = 1;
 
 var lastWin = Date.now();
@@ -37,7 +37,10 @@ var map = {
 }
 var shopUiData = {
     
-}
+};
+var investments = 0;
+const investmentIncome = 100;
+var investmentStart = Date.now();
 
 // Other game vars
 
@@ -62,7 +65,7 @@ const ui = [
                     a[i]=(level*4)+1;
                 });
                 level++;
-                for(let i = 0; i<20; i++){
+                for(let i = 0; i<70; i++){
                     let a = bombParticles.pushParticle(canvas.width/2,canvas.height/2,0,50);
                     bombParticles.particles[a].velocity.x=Math.floor(Math.random() * 20)-10; 
                     bombParticles.particles[a].velocity.y=Math.floor(Math.random() * 20)-10; 
@@ -98,9 +101,9 @@ const ui = [
     },
     {
         title:"gamble",
-        cost:7000,
+        cost:1000,
         eventFunc:function() {
-            money += Math.floor(Math.random()*8000);
+            money += Math.floor(Math.random()*1500);
             audioAssets.playsound(4,audioContext);
         },
         imgIndex:4,
@@ -134,7 +137,18 @@ const ui = [
         imgIndex:5,
         bg:"rgb(62, 0, 22)",
         discription:"summons falling one chez"
-    }
+    },
+    {
+        title:"invest",
+        cost:1000,
+        eventFunc:function() {
+            investments++;
+            investmentStart = Date.now();
+        },
+        imgIndex:4,
+        bg:"rgb(10, 10, 50)",
+        discription:"gambles"
+    },
 ];
 const uiData = {
     width: 100,
