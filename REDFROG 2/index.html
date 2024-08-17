@@ -98,9 +98,9 @@
         
         vec2 center = vec2(.5);
         
-        c.x = texture2D(u_texture, (center + ((zeroToOne - center) * ((dist*.41)+1.)))).r;
-        c.y = texture2D(u_texture, (center + ((zeroToOne - center) * ((dist*.4)+1.)))).g;
-        c.z = texture2D(u_texture, (center + ((zeroToOne - center) * ((dist*.42)+1.)))).b;
+        c.x = texture2D(u_texture, (center + ((zeroToOne - center) * ((dist*.41)+0.69)))).r;
+        c.y = texture2D(u_texture, (center + ((zeroToOne - center) * ((dist*.4)+0.6)))).g;
+        c.z = texture2D(u_texture, (center + ((zeroToOne - center) * ((dist*.42)+0.68)))).b;
         
         gl_FragColor = c;
       }

@@ -3,131 +3,94 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "MAPS/pesemistic-pond.json",
+    "activeFile": "MAPS/boostjump.json",
     "expandedProjectPaths": [
-        "TILESET",
-        ".",
-        "MAPS"
+        "MAPS",
+        "."
     ],
     "fileStates": {
-        "C:/Users/nolan/OneDrive/piskel/pooky-pool.json": {
-            "scale": 0.85796875,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 477.8728828992897,
-                "y": 365.3979238754325
-            }
+        "C:/Users/nonyp/repos/effective-carnival/Leo's dungeon/TILED/TILESET/tilesv1.json": {
+            "scaleInDock": 1
         },
         "MAPS/FANTASTIC-fall.json": {
-            "scale": 0.4777,
+            "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 867.6993929244295,
-                "y": 474.14695415532753
+                "x": 480,
+                "y": 319.5
             }
         },
-        "MAPS/frantic-forest.json": {
-            "scale": 0.2888,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 514.1966759002771,
-                "y": 1549.5152354570637
-            }
-        },
-        "MAPS/halloween1.json": {
-            "scale": 0.3893,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 759.0547135884922,
-                "y": 746.2111482147443
-            }
-        },
-        "MAPS/harmon-harassment.json": {
-            "scale": 0.6569,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 1358.6542852793423,
-                "y": 524.4329426092252
-            }
-        },
-        "MAPS/map.json": {
-            "scale": 2,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 833,
-                "y": 810.5
-            }
-        },
-        "MAPS/parkour-pass.json": {
+        "MAPS/boostjump.json": {
             "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-<<<<<<< HEAD
-                "x": 765.4202620645574,
-                "y": 765.4202620645574
-=======
-                "x": 1134,
-                "y": 364
->>>>>>> 9446d5619e46f413631c03bebf198d4795a1562b
+                "x": 368,
+                "y": 808
+            }
+        },
+        "MAPS/frantic-forest.json": {
+            "scale": 0.529625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 798.6783101250885,
+                "y": 799.6223743214538
+            }
+        },
+        "MAPS/halloween1.json": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 799.3333333333333,
+                "y": 639.3333333333333
+            }
+        },
+        "MAPS/parkour-pass.json": {
+            "scale": 0.529625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 798.6783101250885,
+                "y": 799.6223743214538
             }
         },
         "MAPS/pesemistic-pond.json": {
-            "scale": 0.708,
+            "scale": 0.66203125,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 1098.1638418079096,
-                "y": 516.2429378531074
-            }
-        },
-        "MAPS/pooky-pool.json": {
-            "scale": 0.85796875,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 478.4556547077035,
-                "y": 318.77617920233104
+                "x": 799.0559358036347,
+                "y": 639.6978994571632
             }
         },
         "MAPS/pumpkin-pop.json": {
-            "scale": 0.3094,
+            "scale": 0.331015625,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 725.5979314802845,
-                "y": 1520.6851971557853
+                "x": 797.5454330894502,
+                "y": 1279.3957989143264
             }
         },
-        "MAPS/redfrog-tiles.json": {
-            "scaleInDock": 1
-        },
         "TILESET/tiles.json": {
-            "scaleInDock": 1.9707,
-            "scaleInEditor": 1
+            "scaleInDock": 1
         }
     },
-    "last.imagePath": "C:/Users/nolan/github/effective-carnival/frog game/TILED/TILESET",
-    "map.height": 40,
+    "map.height": 70,
     "map.lastUsedFormat": "json",
-    "map.width": 50,
     "openFiles": [
-        "MAPS/pumpkin-pop.json",
-        "TILESET/tiles.json",
-        "MAPS/map.json",
-        "MAPS/pooky-pool.json",
-        "MAPS/parkour-pass.json",
-        "MAPS/harmon-harassment.json",
         "MAPS/halloween1.json",
-        "MAPS/pesemistic-pond.json"
+        "MAPS/frantic-forest.json",
+        "MAPS/pumpkin-pop.json",
+        "MAPS/FANTASTIC-fall.json",
+        "MAPS/boostjump.json",
+        "MAPS/pesemistic-pond.json",
+        "MAPS/parkour-pass.json"
     ],
     "project": "redfrog.tiled-project",
     "recentFiles": [
-        "MAPS/pumpkin-pop.json",
-        "TILESET/tiles.json",
-        "MAPS/map.json",
-        "MAPS/pooky-pool.json",
-        "MAPS/parkour-pass.json",
-        "MAPS/harmon-harassment.json",
         "MAPS/halloween1.json",
+        "MAPS/frantic-forest.json",
+        "MAPS/pumpkin-pop.json",
+        "MAPS/FANTASTIC-fall.json",
+        "MAPS/parkour-pass.json",
         "MAPS/pesemistic-pond.json",
-        "MAPS/FANTASTIC-fall.json"
-    ],
-    "tileset.lastUsedFormat": "json"
+        "MAPS/boostjump.json"
+    ]
 }

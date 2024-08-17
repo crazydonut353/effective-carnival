@@ -1,6 +1,14 @@
 export { Box }
 
 class Box {
+    /**
+     * 
+     * @param {WebGLRenderingContext} gl 
+     * @param {*} offsetx 
+     * @param {*} offsety 
+     * @param {*} width 
+     * @param {*} height 
+     */
     constructor(gl, offsetx, offsety, width, height) {
         this.x = 0;
         this.y = 0;

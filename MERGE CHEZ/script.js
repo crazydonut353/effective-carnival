@@ -212,6 +212,9 @@ async function init() {
     tileBox.setTransforms(transUniforms.translationLocation, transUniforms.rotationLocation, transUniforms.scaleLocation);
     tileBox.setTexture(imageAssets.files[0],gl);
     
+    tileBox.setTransforms(transUniforms.translationLocation, transUniforms.rotationLocation, transUniforms.scaleLocation);
+    tileBox.setTexture(imageAssets.files[0],gl);
+    
     resize(canvas);
     
     gl.clearColor(1, .8, .6, 1);
@@ -256,6 +259,8 @@ function gameloop() {
         tileBox.update(gl);
         tileBox.render(gl, texCoordLocation, positionAttributeLocation);
     }
+    
+    numBox.render(gl, texCoordLocation, positionAttributeLocation);
     
     requestAnimationFrame(gameloop);
 }

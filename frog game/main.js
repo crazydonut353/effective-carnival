@@ -24,7 +24,8 @@ var maps = [
     "./TILED/MAPS/pumpkin-pop.json",
     "./TILED/MAPS/harmon-harassment.json",
     "./TILED/MAPS/halloween1.json",
-    "./TILED/MAPS/pesemistic-pond.json"
+    "./TILED/MAPS/pesemistic-pond.json",
+    "./TILED/MAPS/boostjump.json"
 ];
 var spawns = [
     [500,2350],
@@ -35,7 +36,8 @@ var spawns = [
     [459.1111111111111,3650],
     [500,600],
     [(5*50),(5*50)],
-    [(10*50),(10*50)]
+    [(10*50),(10*50)],
+    [14*50,58*50]
 ];
 
 var audioAssets = new AudioCollection([
@@ -57,6 +59,7 @@ var tutorail = {
  */
 var eggExplodeParticles;
 var pumpkinExplodeParticles;
+var magicParticles1;
 
 var iMap = 0;
 
@@ -73,6 +76,12 @@ var MainLayer;
  */
 var player;
 
+var mouse = {
+    x : 0,
+    y : 0,
+    down : 0
+}
+
 var GMKeys = {};
 var GMPoints = {
     pumpkins:0,
@@ -84,7 +93,9 @@ var imageAssets = new Images([
     "./images/player.png",
     "./images/egg-spark.png",
     "./images/old-pump-explode.png",
-    "./images/pump-bg.png"
+    "./images/pump-bg.png",
+    "./images/inv.png",
+    "./images/mag1.png"
 ]);
 
 function resize() {
@@ -117,6 +128,12 @@ async function nextMap() {
 
 async function init() {
     document.removeEventListener("click", init, true);
+    document.addEventListener("mousemove", (e)=>{
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+    });
+    document.addEventListener("mousedown", () => {mouse.down=true});
+    document.addEventListener("mouseup", () => {mouse.down=false});
     
     await imageAssets.load();
     
@@ -128,7 +145,8 @@ async function init() {
     
     pumpkinExplodeParticles=new ParticleCollection(imageAssets.files[3]);
     
-    
+    magicParticles1=new ParticleCollection(imageAssets.files[6]);
+    magicParticles1.particleLimit = 10
     
     let map = await new MapLoader().parse(maps[iMap]);
     
@@ -145,6 +163,7 @@ async function init() {
     player.pumpkinExplodeParticles=pumpkinExplodeParticles;
     
     player.eggExplodeParticles=eggExplodeParticles;
+    player.magicParticles1=magicParticles1;
     
     player.x = spawns[iMap][0];
     player.y = spawns[iMap][1];
@@ -176,7 +195,7 @@ async function gameloop() {
         
         player.update(GMKeys,ctx,nextMap,iMap,maps,spawns,audioAssets,audioContext,dt,GMPoints,tutorail,()=>{
             dedTrans=1;
-        });
+        }, mouse);
         
         player.draw(ctx);
         
@@ -186,9 +205,13 @@ async function gameloop() {
         pumpkinExplodeParticles.updateEach((element,i)=>{
             element.draw(ctx);
         });
+        magicParticles1.updateEach((element,i)=>{
+            element.draw(ctx);
+        });
         ctx.fillStyle="black"
         ctx.drawImage(imageAssets.files[4],5,5,60,60)
         ctx.drawImage(imageAssets.files[0],32,128,32,32,10,10,50,50);
+        ctx.drawImage(imageAssets.files[5],(canvas.width/2)-250,canvas.height-150,500,100)
         
         
         ctx.font = "30px Comic Sans MS";
@@ -204,6 +227,11 @@ async function gameloop() {
             ctx.fillStyle=`rgba(255,0,0,${dedTrans})`;
             ctx.fillText("DEATH", (canvas.width/2)-10, (canvas.height/2)-50);
             dedTrans-=0.01;
+        }
+        
+        if (GMKeys["n"]) {
+            nextMap();
+            GMKeys["n"] = false;
         }
     } else {
         ctx.fillStyle="black";
