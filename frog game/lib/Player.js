@@ -13,11 +13,13 @@ class Player {
         this.width=50;
         this.height=100;
         this.velocity={x:0,y:0};
-        this.jumpHeight=100;
+        this.jumpHeight=50;
         this.eggExplodeParticles=null;
         this.sounds=sounds;
         this.coins=0;
         this.action="none";
+        this.magicReady=false;
+        this.mQuo
         this.actionObject = {
           "walk":[0,7],
           "run":[0,7],
@@ -70,7 +72,7 @@ class Player {
     }
     
     
-    update(GMKeys,ctx,nextmapFN,iMap,maps,spawns,audioAssets,audioContext,dt,GMPoints,tutorail,dedt) {
+    update(GMKeys,ctx,nextmapFN,iMap,maps,spawns,audioAssets,audioContext,dt,GMPoints,tutorail,dedt,mouse) {
                     //                             collision script
       //psudo code:
       // if point y intersect (move y) else if point x intersect (move x)
@@ -95,6 +97,8 @@ class Player {
         this.action = "fall"; //15-15
       }
       var canJump = false;
+      
+      
       var waterPower = false;
       this.x+=this.velocity.x;
       this.y+=this.velocity.y;
@@ -170,7 +174,7 @@ class Player {
             
           for(let s = 0; s<20; s++){
               let a = this.pumpkinExplodeParticles.pushParticle(x,y,0,30);
-              this.pumpkinExplodeParticles.particles[a].velocity.x=Math.floor(Math.random() * 20)-10; 
+              this.pumpkinExplodeParticles.particles[a].velocity.x=Math.ceil(Math.random() * 20)-10; 
               this.pumpkinExplodeParticles.particles[a].velocity.y=Math.floor(Math.random() * 20)-10; 
               this.pumpkinExplodeParticles.particles[a].velocity.rotation=this.pumpkinExplodeParticles.particles[a].velocity.x;
               this.layer.tilemap[this.layer.map.getTileIndex(i, Math.floor((this.y+this.height)/50))] = 4;
@@ -237,16 +241,16 @@ class Player {
         }
       }
       if(waterPower){
-        this.jumpHeight=70;
-      }else{
         this.jumpHeight=35;
+      }else{
+        this.jumpHeight=28;
       }
       
       if(this.velocity.y<0||this.velocity.y>1){
         canJump=false;
       }
-      canJump && GMKeys["w"] ? this.velocity.y -= this.jumpHeight : null;
-      canJump && GMKeys["w"] ? audioAssets.playsound(0,audioContext) : null;
+      this.layer.map.getTile(Math.floor((this.x+(this.width/2))/50),Math.floor((this.y+this.height+1)/50))!=3&&this.layer.map.getTile(Math.floor((this.x+(this.width/2))/50),Math.floor((this.y+this.height+1)/50))!=4&&this.layer.map.getTile(Math.floor((this.x+(this.width/2))/50),Math.floor((this.y+this.height+1)/50))!=5 && GMKeys["w"] ? this.velocity.y -= this.jumpHeight : null;
+      this.layer.map.getTile(Math.floor((this.x+(this.width/2))/50),Math.floor((this.y+this.height+1)/50))!=3&&this.layer.map.getTile(Math.floor((this.x+(this.width/2))/50),Math.floor((this.y+this.height+1)/50))!=4&&this.layer.map.getTile(Math.floor((this.x+(this.width/2))/50),Math.floor((this.y+this.height+1)/50))!=5 && GMKeys["w"] && GMKeys["w"] ? audioAssets.playsound(0,audioContext) : null;
       /*
       this.y=((Math.floor((player.y)/50))*50);
       this.velocity.y = 0;
@@ -276,12 +280,33 @@ class Player {
       
       GMKeys["w"] || GMKeys["a"] || GMKeys["s"] || GMKeys["d"] ? tutorail.wasd=true : null;
       
+      if(GMKeys["m"]) {
+        this.magicReady=true;
+      }
+      
+      if(this.magicReady) {
+        let r = Math.PI+Math.atan2((this.middleY+25)-mouse.y,(this.middleX+25)-mouse.x)
+        for(let s = 0; s<1; s++){
+          let a = this.magicParticles1.pushParticle((this.middleX+25)+(Math.cos(r)*100),(this.middleY+50)+(Math.sin(r)*100),0,30);
+          this.magicParticles1.particles[a].velocity.x=Math.ceil(Math.random() * 20)-10; 
+          this.magicParticles1.particles[a].velocity.y=Math.ceil(Math.random() * 20)-10; 
+          this.magicParticles1.particles[a].velocity.rotation=this.magicParticles1.particles[a].velocity.x;
+       }
+       console.clear();
+       console.log(this.magicParticles1.particles.length)
+      }
+      
       //                            particle updating
       
       this.eggExplodeParticles.particles.forEach((x,i,a)=>{
         if(x.x>=ctx.canvas.width+100||x.x<=0-100||x.y>=ctx.canvas.height+100||x.y<=0-100){
             a.splice(i,1);
         }
-    });
+      });
+      this.magicParticles1.particles.forEach((x,i,a)=>{
+        if(x.x>=ctx.canvas.width+100||x.x<=0-100||x.y>=ctx.canvas.height+100||x.y<=0-100){
+            a.splice(i,1);
+        }
+      });
     }
 }

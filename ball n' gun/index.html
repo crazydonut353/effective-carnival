@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡Ball n' gun</title>
+    <style>
+        body, html {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <script src="script.js" type="module"></script>
+    <canvas id="c" width="400" height="400"></canvas>
+    <script  id="vertex-shader-2d" type="notjs">
+        attribute vec2 a_position;
+        attribute vec2 a_texCoord;
+
+        uniform vec2 u_resolution;
+        uniform vec2 u_translation;
+        uniform vec2 u_rotation;
+        uniform vec2 u_scale;
+        
+        varying vec2 v_texCoord;
+        
+        void main() {
+          // Scale the position
+          vec2 scaledPosition = a_position * u_scale;
+          
+            // Rotate the position
+            vec2 rotatedPosition = vec2(
+              scaledPosition.x * u_rotation.y + scaledPosition.y * u_rotation.x,
+              scaledPosition.y * u_rotation.y - scaledPosition.x * u_rotation.x);
+            
+            // Add in the translation.
+            vec2 position = rotatedPosition + u_translation;
+          
+            // convert the rectangle from pixels to 0.0 to 1.0
+            vec2 zeroToOne = position / u_resolution;
+        
+           // convert from 0->1 to 0->2
+           vec2 zeroToTwo = zeroToOne * 2.0;
+        
+           // convert from 0->2 to -1->+1 (clipspace)
+           vec2 clipSpace = zeroToTwo - 1.0;
+           
+           // pass the texCoord to the fragment shader
+           // The GPU will interpolate this value between points
+           v_texCoord = a_texCoord;
+        
+           gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+        }
+      
+      </script>
+      <script  id="fragment-shader-2d" type="notjs">
+      
+        // fragment shaders don't have a default precision so we need
+        // to pick one. mediump is a good default
+        precision mediump float;
+        
+        // our texture
+        uniform sampler2D u_image;
+        
+        // the texCoords passed in from the vertex shader.
+        varying vec2 v_texCoord;
+      
+        void main() {
+          // gl_FragColor is a special variable a fragment shader
+          // is responsible for setting the color of the pixel
+          gl_FragColor = texture2D(u_image, v_texCoord);
+        }
+      
+      </script>
+      <script  id="framebuffer-fragment-shader-2d" type="notjs">
+      
+        precision highp float;
+        uniform sampler2D u_texture;
+        uniform sampler2D u_texture2;
+        uniform vec2 resolution;
+        
+        #define kernel 20.0
+        #define weight 10.0
+        
+
+        vec4 boxBlur(vec2 uv) {
+          vec3 sum = vec3(0);
+          float pixelSize = 1.0 / resolution.x; 
+          
+          // Horizontal Blur
+          vec3 accumulation = vec3(0);
+          vec3 weightsum = vec3(0);
+          for (float i = -kernel; i <= kernel; i++){
+              accumulation += texture2D(u_texture, uv + vec2(i * pixelSize, 0.0)).xyz * weight;
+              weightsum += weight*0.8;
+          }
+          
+          sum = accumulation / weightsum;
+          return vec4(sum, 1.0);
+        }
+        
+        vec4 blur9(sampler2D image, vec2 uv, vec2 resolution, vec2 direction) {
+          vec4 color = vec4(0.0);
+          vec2 off1 = vec2(1.3846153846) * direction;
+          vec2 off2 = vec2(3.2307692308) * direction;
+          color += texture2D(image, uv) * 0.2270270270;
+          color += texture2D(image, uv + (off1 / resolution)) * 0.3162162162;
+          color += texture2D(image, uv - (off1 / resolution)) * 0.3162162162;
+          color += texture2D(image, uv + (off2 / resolution)) * 0.0702702703;
+          color += texture2D(image, uv - (off2 / resolution)) * 0.0702702703;
+          return color;
+        }    
+        
+        void main() {
+          // convert the rectangle from pixels to 0.0 to 1.0
+          vec2 zeroToOne = gl_FragCoord.xy / resolution;
+          
+          gl_FragColor = blur9(u_texture2, zeroToOne, resolution, vec2(13.0,0.0))+texture2D(u_texture, zeroToOne);
+        }
+      
+      </script>
+      <script  id="chromatic-fragment-shader-2d" type="notjs">
+      
+        precision highp float;
+        uniform sampler2D u_texture;
+        uniform vec2 resolution;
+        uniform vec2 realResolution;
+        uniform int ballCount;
+        uniform vec2 balls[1000]; //1000 is max ball count since array length has to be constant
+        uniform int explosionCount;
+        uniform vec2 point1;
+        uniform vec2 point2;
+        
+        float drawLine(vec2 p1, vec2 p2, vec2 uv, float a)
+        {
+            float r = 0.;
+            float one_px = 1. / realResolution.x; //not really one px
+            
+            // get dist between points
+            float d = distance(p1, p2);
+            
+            // get dist between current pixel and p1
+            float duv = distance(p1, uv);
+
+            //if point is on line, according to dist, it should match current uv 
+            r = 1.-floor(1.-(a*one_px)+distance (mix(p1, p2, clamp(duv/d, 0., 1.)),  uv));
+                
+            if(r<0.0) {
+              r=0.0;
+            }
+            return r;
+        }
+        
+        void main() {
+          // convert the rectangle from pixels to 0.0 to 1.0
+          vec2 zeroToOne = gl_FragCoord.xy / resolution;
+          vec2 uv = gl_FragCoord.xy / realResolution;
+          
+          vec3 channelOffset = vec3(1.01,1.005,1.003);
+          vec3 col = vec3(0.);
+          
+          col.x = texture2D(u_texture, zeroToOne*channelOffset.x).r;
+          col.y = texture2D(u_texture, zeroToOne*channelOffset.y).g;
+          col.z = texture2D(u_texture, zeroToOne*channelOffset.z).b;
+          
+          for(int i = 0; i < 1000; i++) {
+            if(i >= ballCount) break;
+            float dist = length(balls[i]-gl_FragCoord.xy);
+            if(dist < 30.) {
+              col = vec3(1.);
+            }
+          }
+          //float dist = 1.0-length(vec2(.5)-uv);
+          //if (dist<0.0) dist=0.0;
+          col += drawLine(point1, point2, gl_FragCoord.xy, 1000.0);
+          
+          gl_FragColor = vec4(col, 1.0);
+        }
+      
+      </script>
+      <script  id="framebuffer-vertex-shader-2d" type="notjs">
+      
+        attribute vec2 position;
+        void main() {
+          gl_Position = vec4(position, 0.0, 1.0);
+        }
+      
+      </script>
+      
+</body>
+</html>

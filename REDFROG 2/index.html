@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>frog platformer</title>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script  id="vertex-shader-2d" type="notjs">
+      attribute vec2 a_position;
+      attribute vec2 a_texCoord;
+
+      uniform vec2 u_resolution;
+      uniform vec2 u_translation;
+      uniform vec2 u_rotation;
+      uniform vec2 u_scale;
+      
+      varying vec2 v_texCoord;
+      
+      void main() {
+        // Scale the position
+        vec2 scaledPosition = a_position * u_scale;
+        
+          // Rotate the position
+          vec2 rotatedPosition = vec2(
+            scaledPosition.x * u_rotation.y + scaledPosition.y * u_rotation.x,
+            scaledPosition.y * u_rotation.y - scaledPosition.x * u_rotation.x);
+          
+          // Add in the translation.
+          vec2 position = rotatedPosition + u_translation;
+        
+          // convert the rectangle from pixels to 0.0 to 1.0
+          vec2 zeroToOne = position / u_resolution;
+      
+         // convert from 0->1 to 0->2
+         vec2 zeroToTwo = zeroToOne * 2.0;
+      
+         // convert from 0->2 to -1->+1 (clipspace)
+         vec2 clipSpace = zeroToTwo - 1.0;
+         
+         // pass the texCoord to the fragment shader
+         // The GPU will interpolate this value between points
+         v_texCoord = a_texCoord;
+      
+         gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+      }
+    
+    </script>
+    <script  id="fragment-shader-2d" type="notjs">
+    
+      // fragment shaders don't have a default precision so we need
+      // to pick one. mediump is a good default
+      precision mediump float;
+      
+      // our texture
+      uniform sampler2D u_image;
+      
+      // the texCoords passed in from the vertex shader.
+      varying vec2 v_texCoord;
+      
+      // the source scale of the image.
+      uniform vec2 u_sScale;
+      
+      // the source position of the image.
+      uniform vec2 u_sPos;
+    
+      void main() {
+        // gl_FragColor is a special variable a fragment shader
+        // is responsible for setting the color of the pixel
+        gl_FragColor = texture2D(u_image, (v_texCoord * u_sScale)+u_sPos);
+      }
+    
+    </script>
+    <script  id="framebuffer-vertex-shader-2d" type="notjs">
+      
+      attribute vec2 position;
+      void main() {
+        gl_Position = vec4(position, 0.0, 1.0);
+      }
+    
+    </script>
+    <script  id="framebuffer-fragment-shader-2d" type="njs">
+      
+      precision highp float;
+      uniform sampler2D u_texture;
+      uniform vec2 resolution;
+      
+      void main() {
+        // convert the rectangle from pixels to 0.0 to 1.0
+        vec2 zeroToOne = gl_FragCoord.xy / resolution;
+        vec4 c = vec4(0.,0.,0.,1.);
+        float dist = distance(vec2(.5),zeroToOne);
+        
+        if(dist<0.) {
+          dist=0.0;
+        }
+        
+        vec2 center = vec2(.5);
+        
+        c.x = texture2D(u_texture, (center + ((zeroToOne - center) * ((dist*.41)+0.69)))).r;
+        c.y = texture2D(u_texture, (center + ((zeroToOne - center) * ((dist*.4)+0.6)))).g;
+        c.z = texture2D(u_texture, (center + ((zeroToOne - center) * ((dist*.42)+0.68)))).b;
+        
+        gl_FragColor = c;
+      }
+    
+    </script>
+    <script src="./main.js" type="module"></script>
+</body>
+</html>

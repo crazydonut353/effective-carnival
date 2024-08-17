@@ -368,7 +368,7 @@ function render() {
     
     // Render discription
     let el = mouseInUi(mouse.x,mouse.y);
-    if(el != undefined) {
+    if(el != undefined) { 
         ctx.fillStyle = "green";
         ctx.fillRect(mouse.x,mouse.y,ctx.measureText(el.discription).width+2,30)
         ctx.font = "20px arial";
@@ -390,9 +390,7 @@ function render() {
     
     // Render dragging object
     
-    if(mouse.dragging==true){
-        ctx.drawImage(imageAssets.files[0],mouse.itemDragging*100,0,100,100,mouse.x-(map.tsize),mouse.y-(map.tsize),map.tsize*2,map.tsize*2)
-    }
+ 
 }
 
 function resize() {

@@ -1,0 +1,14 @@
+{ "columns":21,
+ "image":"maintiles.png",
+ "imageheight":32,
+ "imagewidth":672,
+ "margin":0,
+ "name":"maintiles",
+ "spacing":0,
+ "tilecount":21,
+ "tiledversion":"1.10.2",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.10"
+}

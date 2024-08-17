@@ -3,43 +3,131 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "MAPS/icee.json",
+    "activeFile": "MAPS/pesemistic-pond.json",
     "expandedProjectPaths": [
-        "MAPS",
         "TILESET",
-        "."
+        ".",
+        "MAPS"
     ],
     "fileStates": {
-        "MAPS/icee.json": {
-            "scale": 1,
+        "C:/Users/nolan/OneDrive/piskel/pooky-pool.json": {
+            "scale": 0.85796875,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 525.5,
-                "y": 452.5
+                "x": 477.8728828992897,
+                "y": 365.3979238754325
             }
         },
-        "TILESET/newtiles01.tsx": {
-            "scaleInDock": 1,
-            "scaleInEditor": 1
+        "MAPS/FANTASTIC-fall.json": {
+            "scale": 0.4777,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 867.6993929244295,
+                "y": 474.14695415532753
+            }
+        },
+        "MAPS/frantic-forest.json": {
+            "scale": 0.2888,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 514.1966759002771,
+                "y": 1549.5152354570637
+            }
+        },
+        "MAPS/halloween1.json": {
+            "scale": 0.3893,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 759.0547135884922,
+                "y": 746.2111482147443
+            }
+        },
+        "MAPS/harmon-harassment.json": {
+            "scale": 0.6569,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1358.6542852793423,
+                "y": 524.4329426092252
+            }
+        },
+        "MAPS/map.json": {
+            "scale": 2,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 833,
+                "y": 810.5
+            }
+        },
+        "MAPS/parkour-pass.json": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+<<<<<<< HEAD
+                "x": 765.4202620645574,
+                "y": 765.4202620645574
+=======
+                "x": 1134,
+                "y": 364
+>>>>>>> 9446d5619e46f413631c03bebf198d4795a1562b
+            }
+        },
+        "MAPS/pesemistic-pond.json": {
+            "scale": 0.708,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1098.1638418079096,
+                "y": 516.2429378531074
+            }
+        },
+        "MAPS/pooky-pool.json": {
+            "scale": 0.85796875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 478.4556547077035,
+                "y": 318.77617920233104
+            }
+        },
+        "MAPS/pumpkin-pop.json": {
+            "scale": 0.3094,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 725.5979314802845,
+                "y": 1520.6851971557853
+            }
+        },
+        "MAPS/redfrog-tiles.json": {
+            "scaleInDock": 1
         },
         "TILESET/tiles.json": {
-            "scaleInDock": 1,
+            "scaleInDock": 1.9707,
             "scaleInEditor": 1
         }
     },
-    "last.imagePath": "C:/Users/nolan/source/effective-carnival/frog game/TILED/TILESET",
+    "last.imagePath": "C:/Users/nolan/github/effective-carnival/frog game/TILED/TILESET",
+    "map.height": 40,
     "map.lastUsedFormat": "json",
     "openFiles": [
-        "TILESET/newtiles01.tsx",
-        "MAPS/icee.json",
-        "TILESET/tiles.json"
+        "MAPS/pumpkin-pop.json",
+        "TILESET/tiles.json",
+        "MAPS/map.json",
+        "MAPS/pooky-pool.json",
+        "MAPS/parkour-pass.json",
+        "MAPS/harmon-harassment.json",
+        "MAPS/halloween1.json",
+        "MAPS/pesemistic-pond.json"
     ],
     "project": "redfrog.tiled-project",
     "property.type": "int",
     "recentFiles": [
-        "TILESET/newtiles01.tsx",
+        "MAPS/pumpkin-pop.json",
         "TILESET/tiles.json",
-        "MAPS/icee.json"
+        "MAPS/map.json",
+        "MAPS/pooky-pool.json",
+        "MAPS/parkour-pass.json",
+        "MAPS/harmon-harassment.json",
+        "MAPS/halloween1.json",
+        "MAPS/pesemistic-pond.json",
+        "MAPS/FANTASTIC-fall.json"
     ],
-    "tileset.lastUsedFormat": "tsx"
+    "tileset.lastUsedFormat": "json"
 }

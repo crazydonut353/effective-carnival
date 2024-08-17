@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shader</title>
+</head>
+<body>
+    <script src="script.js" type="module"></script>
+    <canvas id="canvas"></canvas>
+    
+    <script  id="fragment-shader-2d" type="notjs">
+        precision highp float;
+        uniform vec2 u_resolution;
+        uniform float iTime;
+        void main() {
+            vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+            
+            float d = distance(uv,vec2(.5));
+            
+            vec3 c = vec3(0.,1.-d,d);
+            
+            d = sin(d*18.)/18.;
+            d = abs(d);
+            
+            d += cos(uv.x*20.0 + (iTime/200.))/(sin(iTime/4400.)*20.0);
+            
+            d = 0.007 / d; // get inverse for nice glow
+            
+            c *= d;
+            
+            gl_FragColor = vec4(c,1.);
+        }
+      
+      </script>
+      <script  id="vertex-shader-2d" type="notjs">
+      
+        attribute vec2 a_position;
+        void main() {
+          gl_Position = vec4(a_position, 0.0, 1.0);
+        }
+      
+      </script>
+      
+</body>
+</html>

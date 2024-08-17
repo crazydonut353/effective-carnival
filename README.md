@@ -1,7 +1,7 @@
 # effective-carnival
-random code that might be useful
+code i used for my website 👍
 # LICENCE
 🤨🤨🤨☺
 
-# rehehehehhe
-rehehehehherehehehehherehehehehherehehehehherehehehehherehehehehherehehehehherehehehehherehehehehherehehehehherehehehehherehehehehherehehehehherehehehehherehehehehhe
+# dont
+dont steak
