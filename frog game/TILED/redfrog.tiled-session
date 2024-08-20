@@ -3,10 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "MAPS/boostjump.json",
+    "activeFile": "MAPS/pooky-pool.json",
     "expandedProjectPaths": [
-        "MAPS",
-        "."
+        ".",
+        "MAPS"
     ],
     "fileStates": {
         "C:/Users/nonyp/repos/effective-carnival/Leo's dungeon/TILED/TILESET/tilesv1.json": {
@@ -16,16 +16,16 @@
             "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 480,
-                "y": 319.5
+                "x": 381,
+                "y": 331
             }
         },
         "MAPS/boostjump.json": {
-            "scale": 0.5,
+            "scale": 0.33,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 368,
-                "y": 808
+                "x": 154.54545454545473,
+                "y": 884.8484848484848
             }
         },
         "MAPS/frantic-forest.json": {
@@ -40,32 +40,48 @@
             "scale": 0.75,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 799.3333333333333,
-                "y": 639.3333333333333
+                "x": 797.3333333333334,
+                "y": 121.33333333333337
+            }
+        },
+        "MAPS/map.json": {
+            "scale": 0.529625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 800.5664385178192,
+                "y": 800.5664385178192
             }
         },
         "MAPS/parkour-pass.json": {
             "scale": 0.529625,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 798.6783101250885,
-                "y": 799.6223743214538
+                "x": 796.7901817323577,
+                "y": 798.6783101250885
             }
         },
         "MAPS/pesemistic-pond.json": {
-            "scale": 0.66203125,
+            "scale": 0.75,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 799.0559358036347,
-                "y": 639.6978994571632
+                "x": 990.6666666666665,
+                "y": 928
+            }
+        },
+        "MAPS/pooky-pool.json": {
+            "scale": 1.1202083333333333,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 480.2678073275061,
+                "y": 320.47610191556635
             }
         },
         "MAPS/pumpkin-pop.json": {
             "scale": 0.331015625,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 797.5454330894502,
-                "y": 1279.3957989143264
+                "x": 794.524427661081,
+                "y": 1277.8852962001417
             }
         },
         "TILESET/tiles.json": {
@@ -81,7 +97,9 @@
         "MAPS/FANTASTIC-fall.json",
         "MAPS/boostjump.json",
         "MAPS/pesemistic-pond.json",
-        "MAPS/parkour-pass.json"
+        "MAPS/parkour-pass.json",
+        "MAPS/pooky-pool.json",
+        "MAPS/map.json"
     ],
     "project": "redfrog.tiled-project",
     "recentFiles": [
@@ -89,8 +107,10 @@
         "MAPS/frantic-forest.json",
         "MAPS/pumpkin-pop.json",
         "MAPS/FANTASTIC-fall.json",
-        "MAPS/parkour-pass.json",
+        "MAPS/boostjump.json",
         "MAPS/pesemistic-pond.json",
-        "MAPS/boostjump.json"
+        "MAPS/parkour-pass.json",
+        "MAPS/map.json",
+        "MAPS/pooky-pool.json"
     ]
 }
