@@ -51,7 +51,7 @@ class GLTiles {
     }
     
     render(gl, sourceUniforms, texCoordLocation, positionAttributeLocation) {
-        gl.clearColor(.3, 0, 0, 1);
+        gl.clearColor(0.4, 0.08, 0, 1);
         
         var camera = {};
         camera.x = this.camera.x-(this.camera.width/2);

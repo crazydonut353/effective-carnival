@@ -85,7 +85,7 @@ class Game {
         }
     }
     
-    gameloop(gl, fx) {
+    gameloop(gl, fx, fx2) {
         switch (this.GS) {
             case 6:
                 break;

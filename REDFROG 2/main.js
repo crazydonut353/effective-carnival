@@ -7,6 +7,7 @@ import { FXFilter } from "./lib/postfx.js";
 import { MapLoader } from "./lib/mapLoader.js";
 import {TilesetLoader} from "./lib/TilesetLoader.js"
 import { GLTiles } from "./lib/glTiles.js";
+import { Player } from "./lib/player.js"
 
 const perfectFrameTime = 1000/80;
 
@@ -22,7 +23,7 @@ const tiles = new GLTiles(gl, canvas, 3);
 const tiledLoader = new MapLoader();
 const tilesetloader = new TilesetLoader();
 
-const fx = new FXFilter(gl, document.querySelector("#framebuffer-vertex-shader-2d").text,document.querySelector("#framebuffer-fragment-shader-2d").text)
+//const fx = new FXFilter(gl, document.querySelector("#framebuffer-vertex-shader-2d").text,document.querySelector("#framebuffer-fragment-shader-2d").text)
 
 var mouse = {
     x:0,
@@ -60,6 +61,7 @@ var maps = [
     "./TILED/MAPS/halloween1.json",
     "./TILED/MAPS/pesemistic-pond.json"
 ];
+
 var spawns = [
     [500,2350],
     [283.1111111083754,750],
@@ -71,6 +73,8 @@ var spawns = [
     [(5*50),(5*50)],
     [(10*50),(10*50)]
 ];
+
+var player = null;
 
 var audioAssets = new AudioCollection([
     "./sounds/jump.wav",
@@ -85,6 +89,8 @@ var tutorial = {
     "pumpkin":false,
     "leveled":false
 }
+
+var onMenu = false;
 
 var GMKeys = {};
 var GMPoints = {
@@ -137,27 +143,16 @@ function setupShaders() {
     sourceUniforms.scale = gl.getUniformLocation(mainshader.program, "u_sScale");
 }
 
-// Example usage:
-var rect = { x: 50, y: 50, width: 20, height: 20 }; // Example rectangle
-var tilemap = [
-    0, 0, 0, 0, 0,
-    0, 1, 1, 1, 0,
-    0, 1, 0, 1, 0,
-    0, 1, 1, 1, 0,
-    0, 0, 0, 0, 0
-]; // Example tilemap
-const ROWS = 5;
-const COLOMNS = 5;
-var tileSize = 32; // Example tile size
-
 
 async function init() {
     RUNNING = true;
     
     await imageAssets.load();
     await audioAssets.getFile(audioContext)
-    const map = await tiledLoader.parse("./TILED/MAPS/parkour-pass.json");
-    const tileset = await tiledLoader.parse("./TILED/MAPS/parkour-pass.json");
+    const map = await tiledLoader.parse(maps[0]);
+    const tileset = await tilesetloader.parse("./TILED/TILESET/tiles.json");
+    
+    player = new Player(imageAssets.files[1], gl, transUniforms)
     
     audioContext.resume();
     audioAssets.playsound(4, audioContext);
@@ -194,12 +189,20 @@ function update() {
 
 function render() {
     gl.useProgram(mainshader.program);
-    gl.bindFramebuffer(gl.FRAMEBUFFER, fx.framebuffer);
+    //gl.bindFramebuffer(gl.FRAMEBUFFER, fx.framebuffer);
     gl.clear(gl.COLOR_BUFFER_BIT);
-    gl.viewport(0,0,1024, 1024);
+    //gl.viewport(0,0,1024, 1024);
     tiles.render(gl, sourceUniforms, texCoordLocation, positionAttributeLocation);
     
-    fx.render(gl);
+    //fx.render(gl);
+}
+
+function renderMenu() {
+    gl.useProgram(mainshader.program);
+    //gl.bindFramebuffer(gl.FRAMEBUFFER, fx.framebuffer);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    //gl.viewport(0,0,1024, 1024);
+    tiles.render(gl, sourceUniforms, texCoordLocation, positionAttributeLocation);
 }
 
 function gameloop() {
