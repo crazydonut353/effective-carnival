@@ -146,11 +146,11 @@ async function init() {
     pumpkinExplodeParticles=new ParticleCollection(imageAssets.files[3]);
     
     magicParticles1=new ParticleCollection(imageAssets.files[6]);
-    magicParticles1.particleLimit = 10
+    magicParticles1.particleLimit = 10;
     
     let map = await new MapLoader().parse(maps[iMap]);
     
-    let tdata = await new TilesetLoader().parse("./TILED/TILESET/tiles.json")
+    let tdata = await new TilesetLoader().parse("./TILED/TILESET/tiles.json");
     
     
     
@@ -190,7 +190,7 @@ async function gameloop() {
         MainLayer.camera.y = player.y;
         
         resize();
-        
+        w
         MainLayer.render(ctx,50);
         
         player.update(GMKeys,ctx,nextMap,iMap,maps,spawns,audioAssets,audioContext,dt,GMPoints,tutorail,()=>{
